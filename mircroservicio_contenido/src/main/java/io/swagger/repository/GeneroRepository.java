@@ -1,5 +1,11 @@
 package io.swagger.repository;
 
-public class GeneroRepository {
+import io.swagger.model.GeneroEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface GeneroRepository extends JpaRepository<GeneroEntity, Integer> {
     
 }
+

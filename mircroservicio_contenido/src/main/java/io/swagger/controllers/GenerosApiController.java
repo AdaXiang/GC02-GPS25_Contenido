@@ -1,6 +1,8 @@
 package io.swagger.controllers;
-
 import io.swagger.api.GenerosApi;
+import io.swagger.services.GeneroService;
+import io.swagger.model.GeneroEntity;
+
 import io.swagger.model.ErrorResponse;
 import io.swagger.model.Genero;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
 @RestController
@@ -44,10 +47,13 @@ public class GenerosApiController implements GenerosApi {
 
     private final HttpServletRequest request;
 
+    private final GeneroService generoService; //nuevo
+
     @org.springframework.beans.factory.annotation.Autowired
-    public GenerosApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public GenerosApiController(ObjectMapper objectMapper, HttpServletRequest request, GeneroService generoService) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.generoService = generoService; 
     }
 
     public ResponseEntity<List<Genero>> generosGet(@Parameter(in = ParameterIn.QUERY, description = "ID del género" ,schema=@Schema()) @Valid @RequestParam(value = "idGenero", required = false) Integer idGenero
@@ -55,72 +61,145 @@ public class GenerosApiController implements GenerosApi {
 ) {
         // TODO
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Genero>>(objectMapper.readValue("[ {\n  \"id\" : 3,\n  \"nombre\" : \"Rock\"\n}, {\n  \"id\" : 3,\n  \"nombre\" : \"Rock\"\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Genero>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<List<Genero>>(HttpStatus.NOT_IMPLEMENTED);
+        try{
+            List<GeneroEntity> entidades = generoService.getAllGeneros();          
+
+            //Convertir las entidades JPA a los DTO Genero del modelo swagger
+            List<Genero> generos = entidades.stream().map(entidad -> {
+                Genero g = new Genero();
+                g.setId(entidad.getId());
+                g.setNombre(entidad.getNombre());
+                return g;
+            }).collect(Collectors.toList());
+
+            //Devolver la respuesta en JSON solo si el cliente lo acepta
+            if (accept != null && accept.contains("application/json")) {
+                return ResponseEntity.ok(generos);
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();       
+            }
+        } catch (Exception e){
+            log.error("Error al obtener géneros", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Void> generosIdGeneroDelete(@Parameter(in = ParameterIn.PATH, description = "ID del género a eliminar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ) {
         // TODO
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            // 🔹 Verificamos si existe el género
+            var existente = generoService.getGeneroById(idGenero);
+            if (existente.isEmpty()) {
+                // Si no existe → 404 Not Found
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            // 🔹 Eliminamos
+            generoService.deleteGenero(idGenero);
+
+            // 🔹 Respuesta 204 No Content (correcto para DELETE)
+            return ResponseEntity.noContent().build();
+
+        } catch (Exception e) {
+            log.error("Error al eliminar el género con id " + idGenero, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Genero> generosIdGeneroGet(@Parameter(in = ParameterIn.PATH, description = "ID del género a consultar", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ) {
         // TODO
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Genero>(objectMapper.readValue("{\n  \"id\" : 3,\n  \"nombre\" : \"Rock\"\n}", Genero.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Genero>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<Genero>(HttpStatus.NOT_IMPLEMENTED);
+        String accept = request.getHeader("Accept");
+
+        try {
+            var GeneroEntityOpt = generoService.getGeneroById(idGenero);
+
+            if(GeneroEntityOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            // 🔹 Convertir la entidad JPA al modelo Swagger
+            var entidad = GeneroEntityOpt.get();
+            Genero genero = new Genero();
+            genero.setId(entidad.getId());
+            genero.setNombre(entidad.getNombre());
+    
+            if (accept != null && accept.contains("application/json")) {
+                return ResponseEntity.ok(genero);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+        }catch (Exception e) {
+            log.error("Error al obtener el género con id " + idGenero, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 
     public ResponseEntity<Genero> generosIdGeneroPut(@Parameter(in = ParameterIn.PATH, description = "ID del género a actualizar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Genero body
 ) {
         // TODO
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Genero>(objectMapper.readValue("{\n  \"id\" : 3,\n  \"nombre\" : \"Rock\"\n}", Genero.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Genero>(HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            // 🔹 Verificamos si el género existe
+            var existenteOpt = generoService.getGeneroById(idGenero);
+            if (existenteOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        }
 
-        return new ResponseEntity<Genero>(HttpStatus.NOT_IMPLEMENTED);
+            // 🔹 Actualizamos los datos
+            var existente = existenteOpt.get();
+            existente.setNombre(body.getNombre());
+
+            var actualizado = generoService.updateGenero(idGenero, existente);
+
+            // 🔹 Convertimos a modelo Swagger
+            Genero genero = new Genero();
+            genero.setId(actualizado.getId());
+            genero.setNombre(actualizado.getNombre());
+
+            // 🔹 Devolvemos la respuesta si el cliente acepta JSON
+            if (accept != null && accept.contains("application/json")) {
+                return ResponseEntity.ok(genero);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+
+        } catch (Exception e) {
+            log.error("Error al actualizar el género con id " + idGenero, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Genero> generosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Genero body
 ) {
         // TODO
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Genero>(objectMapper.readValue("{\n  \"id\" : 3,\n  \"nombre\" : \"Rock\"\n}", Genero.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Genero>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
-        return new ResponseEntity<Genero>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            var entidad = new GeneroEntity();
+            entidad.setNombre(body.getNombre());
+
+            // guardar en bd
+            var guardado = generoService.createGenero(entidad);
+
+            //Convertirlo a swagger
+            Genero genero = new Genero();
+            genero.setId(guardado.getId());
+            genero.setNombre(guardado.getNombre());
+
+            if (accept != null && accept.contains("application/json")) {
+                return new ResponseEntity<>(genero, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+
+        } catch (Exception e) {
+            log.error("Error al crear un nuevo género", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

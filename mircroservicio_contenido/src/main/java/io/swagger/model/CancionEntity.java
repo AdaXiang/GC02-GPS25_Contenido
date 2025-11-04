@@ -1,7 +1,8 @@
 package io.swagger.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "CANCIONES")
@@ -39,12 +40,46 @@ public class CancionEntity {
     @Column(name = "ESALBUM")
     private Boolean esalbum;
 
-    @Column(name = "GENERO_ID")
+    @JoinColumn(name = "ID_GENERO")
     private Integer idGenero;
 
     @Column(name = "ARTISTA_ID")
     private Integer idArtista;
 
     // Getters y Setters
-    // ...
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public LocalDateTime getFechacrea() { return fechacrea; }
+    public void setFechacrea(LocalDateTime fechacrea) { this.fechacrea = fechacrea; }
+
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    public String getUrlFoto() { return urlFoto; }
+    public void setUrlFoto(String urlFoto) { this.urlFoto = urlFoto; }
+
+    public Integer getNumventas() { return numventas; }
+    public void setNumventas(Integer numventas) { this.numventas = numventas; }
+
+    public Integer getValoracion() { return valoracion; }
+    public void setValoracion(Integer valoracion) { this.valoracion = valoracion; }
+
+    public Float getPrecio() { return precio; }
+    public void setPrecio(Float precio) { this.precio = precio; }
+
+    public Boolean getEsnovedad() { return esnovedad; }
+    public void setEsnovedad(Boolean esnovedad) { this.esnovedad = esnovedad; }
+
+    public Boolean getEsalbum() { return esalbum; }
+    public void setEsalbum(Boolean esalbum) { this.esalbum = esalbum; }
+
+    public Integer getGenero() { return idGenero; }
+    public void setGenero(Integer idGenero) { this.idGenero = idGenero; }
+
+    public Integer getArtista() { return idArtista; }
+    public void setArtista(Integer idArtista) { this.idArtista = idArtista; }
 }

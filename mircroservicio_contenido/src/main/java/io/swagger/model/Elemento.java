@@ -112,8 +112,6 @@ public class Elemento   {
     return id;
   }
 
-
-
   public void setId(Integer id) { 
 
     this.id = id;
@@ -136,8 +134,6 @@ public class Elemento   {
   public String getNombre() {  
     return nombre;
   }
-
-
 
   public void setNombre(String nombre) { 
 
@@ -162,8 +158,6 @@ public class Elemento   {
     return fechacrea;
   }
 
-
-
   public void setFechacrea(OffsetDateTime fechacrea) { 
     this.fechacrea = fechacrea;
   }
@@ -184,8 +178,6 @@ public class Elemento   {
   public String getDescripcion() {  
     return descripcion;
   }
-
-
 
   public void setDescripcion(String descripcion) { 
     this.descripcion = descripcion;
@@ -208,8 +200,6 @@ public class Elemento   {
     return urlFoto;
   }
 
-
-
   public void setUrlFoto(String urlFoto) { 
     this.urlFoto = urlFoto;
   }
@@ -230,8 +220,6 @@ public class Elemento   {
   public Integer getNumventas() {  
     return numventas;
   }
-
-
 
   public void setNumventas(Integer numventas) { 
     this.numventas = numventas;
@@ -256,8 +244,6 @@ public class Elemento   {
     return valoracion;
   }
 
-
-
   public void setValoracion(Integer valoracion) { 
     this.valoracion = valoracion;
   }
@@ -278,8 +264,6 @@ public class Elemento   {
   public Float getPrecio() {  
     return precio;
   }
-
-
 
   public void setPrecio(Float precio) { 
     this.precio = precio;
@@ -302,8 +286,6 @@ public class Elemento   {
     return esnovedad;
   }
 
-
-
   public void setEsnovedad(Boolean esnovedad) { 
     this.esnovedad = esnovedad;
   }
@@ -324,8 +306,6 @@ public class Elemento   {
   public Boolean isEsalbum() {  
     return esalbum;
   }
-
-
 
   public void setEsalbum(Boolean esalbum) { 
     this.esalbum = esalbum;
@@ -349,8 +329,6 @@ public class Elemento   {
     return genero;
   }
 
-
-
   public void setGenero(Genero genero) { 
     this.genero = genero;
   }
@@ -372,8 +350,6 @@ public class Elemento   {
   public Artista getArtista() {  
     return artista;
   }
-
-
 
   public void setArtista(Artista artista) { 
     this.artista = artista;

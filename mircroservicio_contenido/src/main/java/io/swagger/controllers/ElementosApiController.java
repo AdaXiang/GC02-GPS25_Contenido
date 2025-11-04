@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.controllers;
 
+import io.swagger.api.ElementosApi;
 import io.swagger.model.Elemento;
 import io.swagger.model.ElementoInput;
 import io.swagger.model.ErrorResponse;
@@ -58,6 +59,7 @@ public class ElementosApiController implements ElementosApi {
 ,@Parameter(in = ParameterIn.QUERY, description = "Fecha mínima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamin", required = false) LocalDate fechamin
 ,@Parameter(in = ParameterIn.QUERY, description = "Fecha máxima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamax", required = false) LocalDate fechamax
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -73,12 +75,14 @@ public class ElementosApiController implements ElementosApi {
 
     public ResponseEntity<Void> elementosIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID del contenido que se desea eliminar", required=true, schema=@Schema()) @PathVariable("id") Integer id
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Elemento> elementosIdGet(@Parameter(in = ParameterIn.PATH, description = "ID del contenido a consultar", required=true, schema=@Schema()) @PathVariable("id") Integer id
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -94,6 +98,7 @@ public class ElementosApiController implements ElementosApi {
 
     public ResponseEntity<Elemento> elementosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoInput body
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -109,6 +114,7 @@ public class ElementosApiController implements ElementosApi {
 
     public ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Elemento body
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

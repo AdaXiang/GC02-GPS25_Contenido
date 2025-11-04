@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.controllers;
 
+import io.swagger.api.CancionesidCancionApi;
 import io.swagger.model.Cancion;
 import io.swagger.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,12 +52,14 @@ public class CancionesidCancionApiController implements CancionesidCancionApi {
 
     public ResponseEntity<Void> cancionesidCancionDelete(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a eliminar.", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Cancion> cancionesidCancionGet(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a consultar", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -73,6 +76,7 @@ public class CancionesidCancionApiController implements CancionesidCancionApi {
     public ResponseEntity<Cancion> cancionesidCancionPut(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a actualizar.", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
 ,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

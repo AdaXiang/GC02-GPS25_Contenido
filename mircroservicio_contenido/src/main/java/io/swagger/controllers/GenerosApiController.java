@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.controllers;
 
+import io.swagger.api.GenerosApi;
 import io.swagger.model.ErrorResponse;
 import io.swagger.model.Genero;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,6 +53,7 @@ public class GenerosApiController implements GenerosApi {
     public ResponseEntity<List<Genero>> generosGet(@Parameter(in = ParameterIn.QUERY, description = "ID del género" ,schema=@Schema()) @Valid @RequestParam(value = "idGenero", required = false) Integer idGenero
 ,@Parameter(in = ParameterIn.QUERY, description = "Nombre del género" ,schema=@Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -67,12 +69,14 @@ public class GenerosApiController implements GenerosApi {
 
     public ResponseEntity<Void> generosIdGeneroDelete(@Parameter(in = ParameterIn.PATH, description = "ID del género a eliminar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Genero> generosIdGeneroGet(@Parameter(in = ParameterIn.PATH, description = "ID del género a consultar", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -89,6 +93,7 @@ public class GenerosApiController implements GenerosApi {
     public ResponseEntity<Genero> generosIdGeneroPut(@Parameter(in = ParameterIn.PATH, description = "ID del género a actualizar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Genero body
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -104,6 +109,7 @@ public class GenerosApiController implements GenerosApi {
 
     public ResponseEntity<Genero> generosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Genero body
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.controllers;
 
+import io.swagger.api.CancionesApi;
 import io.swagger.model.Cancion;
 import io.swagger.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +52,11 @@ public class CancionesApiController implements CancionesApi {
 
     public ResponseEntity<List<Cancion>> cancionesAlbumIdAlbumGet(@Parameter(in = ParameterIn.PATH, description = "ID del álbum cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idAlbum") Integer idAlbum
 ) {
+        // TODO: Llamar al servicio para obtener las canciones filtradas por el ID del álbum.
+        // Ejemplo:
+        // List<Cancion> canciones = cancionService.obtenerPorAlbum(idAlbum);
+        // return ResponseEntity.ok(canciones);
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -66,6 +72,11 @@ public class CancionesApiController implements CancionesApi {
 
     public ResponseEntity<List<Cancion>> cancionesArtistaIdArtistaGet(@Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idArtista") Integer idArtista
 ) {
+        // TODO: Llamar al servicio para obtener canciones según el ID del artista.
+        // Ejemplo:
+        // List<Cancion> canciones = cancionService.obtenerPorArtista(idArtista);
+        // return ResponseEntity.ok(canciones);
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -81,6 +92,11 @@ public class CancionesApiController implements CancionesApi {
 
     public ResponseEntity<List<Cancion>> cancionesGeneroIdGeneroGet(@Parameter(in = ParameterIn.PATH, description = "ID del género cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
 ) {
+        // TODO: Llamar al servicio para obtener canciones según el ID del género.
+        // Ejemplo:
+        // List<Cancion> canciones = cancionService.obtenerPorGenero(idGenero);
+        // return ResponseEntity.ok(canciones);
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -97,6 +113,11 @@ public class CancionesApiController implements CancionesApi {
     public ResponseEntity<List<Cancion>> cancionesGet(@Parameter(in = ParameterIn.QUERY, description = "ID del álbum al que pertenece la canción" ,schema=@Schema()) @Valid @RequestParam(value = "idAlbum", required = false) Integer idAlbum
 ,@Parameter(in = ParameterIn.QUERY, description = "Nombre de la canción" ,schema=@Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre
 ) {
+        // TODO: Implementar la búsqueda de canciones con filtros opcionales (por nombre y/o idAlbum).
+        // Ejemplo:
+        // List<Cancion> canciones = cancionService.obtenerCanciones(idAlbum, nombre);
+        // return ResponseEntity.ok(canciones);
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -112,6 +133,11 @@ public class CancionesApiController implements CancionesApi {
 
     public ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body
 ) {
+        // TODO: Guardar una nueva canción en la base de datos usando el servicio.
+        // Ejemplo:
+        // Cancion guardada = cancionService.guardarCancion(body);
+        // return ResponseEntity.status(HttpStatus.CREATED).body(guardada);
+
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

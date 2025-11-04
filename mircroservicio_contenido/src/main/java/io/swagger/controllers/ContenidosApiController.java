@@ -1,5 +1,6 @@
-package io.swagger.api;
+package io.swagger.controllers;
 
+import io.swagger.api.ContenidosApi;
 import io.swagger.model.Contenido;
 import io.swagger.model.ErrorResponse;
 import org.threeten.bp.LocalDate;
@@ -57,6 +58,7 @@ public class ContenidosApiController implements ContenidosApi {
 ,@Parameter(in = ParameterIn.QUERY, description = "Fecha mínima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamin", required = false) LocalDate fechamin
 ,@Parameter(in = ParameterIn.QUERY, description = "Fecha máxima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamax", required = false) LocalDate fechamax
 ) {
+        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

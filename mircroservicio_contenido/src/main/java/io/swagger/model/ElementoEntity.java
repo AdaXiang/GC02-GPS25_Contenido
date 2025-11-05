@@ -18,7 +18,7 @@ public class ElementoEntity {
     @Column(name = "NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "FECHACREA")
+    @Column(name = "FECHACREA", updatable = false)
     private LocalDateTime fechacrea;
 
     @Column(name = "DESCRIPCION")
@@ -47,6 +47,11 @@ public class ElementoEntity {
     
     @Column(name = "ID_ARTISTA")
     private Integer artista;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechacrea = LocalDateTime.now();
+    }
 
     // --- Getters y Setters ---
     public Integer getId() { return id; }

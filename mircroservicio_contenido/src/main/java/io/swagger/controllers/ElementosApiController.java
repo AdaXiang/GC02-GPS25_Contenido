@@ -63,7 +63,7 @@ public class ElementosApiController implements ElementosApi {
         e.setNumventas(entity.getNumventas());
         e.setUrlFoto(entity.getUrlFoto());
         return e;
-}
+    }
 
     @org.springframework.beans.factory.annotation.Autowired
     public ElementosApiController(ElementoService elementoService, ObjectMapper objectMapper, HttpServletRequest request) {
@@ -107,6 +107,7 @@ public class ElementosApiController implements ElementosApi {
                   .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // POST /elementos
     @Override
     public ResponseEntity<Elemento> elementosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoInput body) {
         ElementoEntity entity = new ElementoEntity();

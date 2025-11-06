@@ -9,7 +9,8 @@ public class GeneroEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    
+    @Column(name = "NOMBRE", nullable = false)
     private String nombre;
 
     // Getters y Setters

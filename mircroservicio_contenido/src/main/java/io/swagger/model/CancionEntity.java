@@ -1,85 +1,88 @@
 package io.swagger.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.io.Serializable;
 
+/**
+ * Entidad JPA que representa la tabla CANCION en la base de datos Oracle.
+ */
 @Entity
-@Table(name = "CANCIONES")
-public class CancionEntity {
+@Table(name = "CANCION")
+public class CancionEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
+    @Column(name = "IDELEMENTO")
+    private Integer idElemento;
 
-    @Column(name = "NOMBRE", nullable = false)
-    private String nombre;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDELEMENTO", referencedColumnName = "ID", insertable = false, updatable = false)
+    private ElementoEntity elemento;
 
-    @Column(name = "FECHACREA")
-    private LocalDateTime fechacrea;
+    @Column(name = "NOMBREAUDIO", nullable = false, length = 100)
+    private String nombreAudio;
 
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
+    @Column(name = "NUMREP", nullable = false)
+    private Integer numRep = 0;
 
-    @Column(name = "URL_FOTO")
-    private String urlFoto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDALBUM", referencedColumnName = "ID")
+    private ElementoEntity album;
 
-    @Column(name = "NUMVENTAS")
-    private Integer numventas;
-
-    @Column(name = "VALORACION")
-    private Integer valoracion;
-
-    @Column(name = "PRECIO")
-    private Float precio;
-
-    @Column(name = "ESNOVEDAD")
-    private Boolean esnovedad;
-
-    @Column(name = "ESALBUM")
-    private Boolean esalbum;
-
-    @JoinColumn(name = "ID_GENERO")
-    private Integer idGenero;
-
-    @Column(name = "ARTISTA_ID")
-    private Integer idArtista;
-
+    // =============================
     // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    // =============================
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getIdElemento() {
+        return idElemento;
+    }
 
-    public LocalDateTime getFechacrea() { return fechacrea; }
-    public void setFechacrea(LocalDateTime fechacrea) { this.fechacrea = fechacrea; }
+    public void setIdElemento(Integer idElemento) {
+        this.idElemento = idElemento;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public ElementoEntity getElemento() {
+        return elemento;
+    }
 
-    public String getUrlFoto() { return urlFoto; }
-    public void setUrlFoto(String urlFoto) { this.urlFoto = urlFoto; }
+    public void setElemento(ElementoEntity elemento) {
+        this.elemento = elemento;
+    }
 
-    public Integer getNumventas() { return numventas; }
-    public void setNumventas(Integer numventas) { this.numventas = numventas; }
+    public String getNombreAudio() {
+        return nombreAudio;
+    }
 
-    public Integer getValoracion() { return valoracion; }
-    public void setValoracion(Integer valoracion) { this.valoracion = valoracion; }
+    public void setNombreAudio(String nombreAudio) {
+        this.nombreAudio = nombreAudio;
+    }
 
-    public Float getPrecio() { return precio; }
-    public void setPrecio(Float precio) { this.precio = precio; }
+    public Integer getNumRep() {
+        return numRep;
+    }
 
-    public Boolean getEsnovedad() { return esnovedad; }
-    public void setEsnovedad(Boolean esnovedad) { this.esnovedad = esnovedad; }
+    public void setNumRep(Integer numRep) {
+        this.numRep = numRep;
+    }
 
-    public Boolean getEsalbum() { return esalbum; }
-    public void setEsalbum(Boolean esalbum) { this.esalbum = esalbum; }
+    public ElementoEntity getAlbum() {
+        return album;
+    }
 
-    public Integer getGenero() { return idGenero; }
-    public void setGenero(Integer idGenero) { this.idGenero = idGenero; }
+    public void setAlbum(ElementoEntity album) {
+        this.album = album;
+    }
 
-    public Integer getArtista() { return idArtista; }
-    public void setArtista(Integer idArtista) { this.idArtista = idArtista; }
+    // =============================
+    // Métodos auxiliares
+    // =============================
+
+    @Override
+    public String toString() {
+        return "CancionEntity{" +
+                "idElemento=" + idElemento +
+                ", nombreAudio='" + nombreAudio + '\'' +
+                ", numRep=" + numRep +
+                ", idAlbum=" + (album != null ? album.getId() : null) +
+                '}';
+    }
 }

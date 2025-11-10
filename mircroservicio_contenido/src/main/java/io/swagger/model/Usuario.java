@@ -19,7 +19,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 @NotUndefined
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 
 
 public class Usuario   {
@@ -34,10 +34,6 @@ public class Usuario   {
   @JsonProperty("nombreReal")
 
   private String nombreReal = null;
-
-  @JsonProperty("contrasenia")
-
-  private String contrasenia = null;
 
   @JsonProperty("correo")
 
@@ -131,31 +127,6 @@ public class Usuario   {
   public void setNombreReal(String nombreReal) { 
 
     this.nombreReal = nombreReal;
-  }
-
-  public Usuario contrasenia(String contrasenia) { 
-
-    this.contrasenia = contrasenia;
-    return this;
-  }
-
-  /**
-   * Contraseña encriptada del usuario
-   * @return contrasenia
-   **/
-  
-  @Schema(example = "$2b$10$A1bC2dE3fG4hI5jK6lM7nO8pQ9rS0tU", required = true, description = "Contraseña encriptada del usuario")
-  
-  @NotNull
-  public String getContrasenia() {  
-    return contrasenia;
-  }
-
-
-
-  public void setContrasenia(String contrasenia) { 
-
-    this.contrasenia = contrasenia;
   }
 
   public Usuario correo(String correo) { 
@@ -267,7 +238,6 @@ public class Usuario   {
     return Objects.equals(this.id, usuario.id) &&
         Objects.equals(this.nombreUsuario, usuario.nombreUsuario) &&
         Objects.equals(this.nombreReal, usuario.nombreReal) &&
-        Objects.equals(this.contrasenia, usuario.contrasenia) &&
         Objects.equals(this.correo, usuario.correo) &&
         Objects.equals(this.descripcion, usuario.descripcion) &&
         Objects.equals(this.fechaRegistro, usuario.fechaRegistro) &&
@@ -276,7 +246,7 @@ public class Usuario   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombreUsuario, nombreReal, contrasenia, correo, descripcion, fechaRegistro, rutaFoto);
+    return Objects.hash(id, nombreUsuario, nombreReal, correo, descripcion, fechaRegistro, rutaFoto);
   }
 
   @Override
@@ -287,7 +257,6 @@ public class Usuario   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    nombreUsuario: ").append(toIndentedString(nombreUsuario)).append("\n");
     sb.append("    nombreReal: ").append(toIndentedString(nombreReal)).append("\n");
-    sb.append("    contrasenia: ").append(toIndentedString(contrasenia)).append("\n");
     sb.append("    correo: ").append(toIndentedString(correo)).append("\n");
     sb.append("    descripcion: ").append(toIndentedString(descripcion)).append("\n");
     sb.append("    fechaRegistro: ").append(toIndentedString(fechaRegistro)).append("\n");

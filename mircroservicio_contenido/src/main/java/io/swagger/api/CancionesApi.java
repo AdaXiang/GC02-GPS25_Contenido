@@ -6,6 +6,7 @@
 package io.swagger.api;
 
 import io.swagger.model.Cancion;
+import io.swagger.model.CancionInput;
 import io.swagger.model.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +34,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 @Validated
 public interface CancionesApi {
 
@@ -95,7 +96,7 @@ public interface CancionesApi {
     @Operation(summary = "Crear una nueva canción", description = "Inserta un nuevo registro en la tabla de canciones.", security = {
         @SecurityRequirement(name = "bearerAuth")    }, tags={ "Canciones" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "201", description = "Canción creada correctamente.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Cancion.class))),
+        @ApiResponse(responseCode = "201", description = "Canción creada correctamente.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CancionInput.class))),
         
         @ApiResponse(responseCode = "400", description = "Error en los datos enviados.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
         
@@ -108,7 +109,25 @@ public interface CancionesApi {
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body
+    ResponseEntity<CancionInput> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body
+);
+
+
+    @Operation(summary = "Actualizar una canción por ID", description = "Modifica los datos de una canción existente.", security = {
+        @SecurityRequirement(name = "bearerAuth")    }, tags={ "Canciones" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Canción actualizada correctamente.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CancionInput.class))),
+        
+        @ApiResponse(responseCode = "401", description = "Token inválido o no autorizado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+        
+        @ApiResponse(responseCode = "404", description = "Canción no encontrada.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+        
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+    @RequestMapping(value = "/canciones",
+        produces = { "application/json" }, 
+        consumes = { "application/json" }, 
+        method = RequestMethod.PUT)
+    ResponseEntity<CancionInput> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body
 );
 
 }

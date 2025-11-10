@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import io.swagger.model.CancionEntity;
+import io.swagger.model.CancionInput;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import javax.servlet.http.HttpServletRequest;
@@ -136,14 +138,32 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @Override
-    public ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body) {
-        CancionEntity entity = new CancionEntity();
-        entity.setIdElemento(body.getId());
-        //entity.setNombreAudio(body.getNombreAudio());
-        entity.setNumRep(body.getNumventas()); // si numRep no está en modelo, cámbialo
-        // entity.setAlbum(...); // si quieres asignar un álbum por ID
+    public ResponseEntity<CancionInput> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<CancionInput>(objectMapper.readValue("\"\"", CancionInput.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<CancionInput>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
 
-        CancionEntity saved = cancionService.save(entity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(convertToModel(saved));
+        return new ResponseEntity<CancionInput>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @Override
+    public ResponseEntity<CancionInput> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<CancionInput>(objectMapper.readValue("\"\"", CancionInput.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<CancionInput>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<CancionInput>(HttpStatus.NOT_IMPLEMENTED);
     }
 }

@@ -3,11 +3,9 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.model.Artista;
-import io.swagger.model.Elemento;
-import io.swagger.model.Genero;
+import io.swagger.model.ElementoInput;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.threeten.bp.OffsetDateTime;
+import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
 import org.openapitools.jackson.nullable.JsonNullable;
 import io.swagger.configuration.NotUndefined;
@@ -18,14 +16,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Cancion
+ * CancionInput
  */
 @Validated
 @NotUndefined
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 
 
-public class Cancion extends Elemento  {
+public class CancionInput extends ElementoInput  {
   @JsonProperty("idElemento")
 
   private Integer idElemento = null;
@@ -49,7 +47,7 @@ public class Cancion extends Elemento  {
   private Integer idAlbum = null;
 
 
-  public Cancion idElemento(Integer idElemento) { 
+  public CancionInput idElemento(Integer idElemento) { 
 
     this.idElemento = idElemento;
     return this;
@@ -74,7 +72,7 @@ public class Cancion extends Elemento  {
     this.idElemento = idElemento;
   }
 
-  public Cancion nombreAudio(String nombreAudio) { 
+  public CancionInput nombreAudio(String nombreAudio) { 
 
     this.nombreAudio = nombreAudio;
     return this;
@@ -97,7 +95,7 @@ public class Cancion extends Elemento  {
     this.nombreAudio = nombreAudio;
   }
 
-  public Cancion numRep(Integer numRep) { 
+  public CancionInput numRep(Integer numRep) { 
 
     this.numRep = numRep;
     return this;
@@ -121,7 +119,7 @@ public class Cancion extends Elemento  {
     this.numRep = numRep;
   }
 
-  public Cancion idAlbum(Integer idAlbum) { 
+  public CancionInput idAlbum(Integer idAlbum) { 
 
     this.idAlbum = idAlbum;
     return this;
@@ -152,11 +150,11 @@ public class Cancion extends Elemento  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Cancion cancion = (Cancion) o;
-    return Objects.equals(this.idElemento, cancion.idElemento) &&
-        Objects.equals(this.nombreAudio, cancion.nombreAudio) &&
-        Objects.equals(this.numRep, cancion.numRep) &&
-        Objects.equals(this.idAlbum, cancion.idAlbum) &&
+    CancionInput cancionInput = (CancionInput) o;
+    return Objects.equals(this.idElemento, cancionInput.idElemento) &&
+        Objects.equals(this.nombreAudio, cancionInput.nombreAudio) &&
+        Objects.equals(this.numRep, cancionInput.numRep) &&
+        Objects.equals(this.idAlbum, cancionInput.idAlbum) &&
         super.equals(o);
   }
 
@@ -168,7 +166,7 @@ public class Cancion extends Elemento  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Cancion {\n");
+    sb.append("class CancionInput {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    idElemento: ").append(toIndentedString(idElemento)).append("\n");
     sb.append("    nombreAudio: ").append(toIndentedString(nombreAudio)).append("\n");

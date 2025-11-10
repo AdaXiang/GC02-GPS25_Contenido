@@ -1,6 +1,5 @@
 package io.swagger.controllers;
-
-import io.swagger.api.CancionesidCancionApi;
+import io.swagger.api.*;
 import io.swagger.model.Cancion;
 import io.swagger.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +33,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 @RestController
 public class CancionesidCancionApiController implements CancionesidCancionApi {
 
@@ -52,31 +51,12 @@ public class CancionesidCancionApiController implements CancionesidCancionApi {
 
     public ResponseEntity<Void> cancionesidCancionDelete(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a eliminar.", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
 ) {
-        // TODO
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<Cancion> cancionesidCancionGet(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a consultar", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
 ) {
-        // TODO
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Cancion>(objectMapper.readValue("\"\"", Cancion.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Cancion>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<Cancion>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Cancion> cancionesidCancionPut(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a actualizar.", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
-,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body
-) {
-        // TODO
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

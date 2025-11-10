@@ -33,7 +33,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 @Validated
 public interface CancionesidCancionApi {
 
@@ -63,25 +63,6 @@ public interface CancionesidCancionApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Cancion> cancionesidCancionGet(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a consultar", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
-);
-
-
-    @Operation(summary = "Actualizar una canción por ID", description = "Modifica los datos de una canción existente.", security = {
-        @SecurityRequirement(name = "bearerAuth")    }, tags={ "Canciones" })
-    @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Canción actualizada correctamente.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Cancion.class))),
-        
-        @ApiResponse(responseCode = "401", description = "Token inválido o no autorizado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-        
-        @ApiResponse(responseCode = "404", description = "Canción no encontrada.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-        
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/canciones{idCancion}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" }, 
-        method = RequestMethod.PUT)
-    ResponseEntity<Cancion> cancionesidCancionPut(@Parameter(in = ParameterIn.PATH, description = "ID de la canción a actualizar.", required=true, schema=@Schema()) @PathVariable("idCancion") Integer idCancion
-, @Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cancion body
 );
 
 }

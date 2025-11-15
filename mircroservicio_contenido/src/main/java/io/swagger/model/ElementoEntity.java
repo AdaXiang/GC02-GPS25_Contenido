@@ -1,6 +1,9 @@
 package io.swagger.model;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.ForeignKey;
+
 import java.time.LocalDateTime;
 
 /**
@@ -44,6 +47,9 @@ public class ElementoEntity {
 
     @JoinColumn(name = "ID_GENERO")
     private Integer genero;
+
+    @JoinColumn(name = "ID_SUBGENERO")
+    private Integer subgenero;
     
     @Column(name = "ID_ARTISTA")
     private Integer artista;
@@ -89,4 +95,8 @@ public class ElementoEntity {
 
     public Integer getArtista() { return artista; }
     public void setArtista(Integer artista) { this.artista = artista; }
+
+    public Integer getSubgenero() {
+        return this.subgenero;
+    }
 }

@@ -69,6 +69,11 @@ public class Contenido   {
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
   private Genero genero = null;
 
+  @JsonProperty("subgenero")
+  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
+  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  private Genero subgenero = null;
+
   @JsonProperty("fotoamazon")
 
   @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
@@ -77,7 +82,7 @@ public class Contenido   {
 
   @JsonProperty("tipo")
 
-  private BigDecimal tipo = null;
+  private Integer tipo = null;
 
 
   public Contenido id(Integer id) { 
@@ -324,7 +329,7 @@ public class Contenido   {
     this.fotoamazon = fotoamazon;
   }
 
-  public Contenido tipo(BigDecimal tipo) { 
+  public Contenido tipo(Integer tipo) { 
 
     this.tipo = tipo;
     return this;
@@ -339,13 +344,13 @@ public class Contenido   {
   
 @Valid
   @NotNull
-  public BigDecimal getTipo() {  
+  public Integer getTipo() {  
     return tipo;
   }
 
 
 
-  public void setTipo(BigDecimal tipo) { 
+  public void setTipo(Integer tipo) { 
 
     this.tipo = tipo;
   }
@@ -406,5 +411,20 @@ public class Contenido   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  public Integer getSubgeneroId() {
+    if (subgenero != null) {
+        return subgenero.getId();
+    }
+    return null;
+  }
+
+  public Genero getSubgenero() {
+    return this.subgenero;
+  }
+    
+  public void setSubgenero(Genero subgenero) {
+    this.subgenero = subgenero;
   }
 }

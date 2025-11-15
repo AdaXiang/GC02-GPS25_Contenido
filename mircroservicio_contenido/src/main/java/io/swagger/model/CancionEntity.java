@@ -12,6 +12,7 @@ public class CancionEntity implements Serializable {
 
     @Id
     @Column(name = "IDELEMENTO")
+    @JoinColumn(name = "IDELEMENTO")
     private Integer idElemento;
 
     @OneToOne(fetch = FetchType.LAZY)

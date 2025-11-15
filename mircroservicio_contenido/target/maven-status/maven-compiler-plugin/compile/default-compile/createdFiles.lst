@@ -8,7 +8,6 @@ io\swagger\repository\ContenidoRepository.class
 io\swagger\configuration\CustomInstantDeserializer$11.class
 io\swagger\configuration\CustomInstantDeserializer$6.class
 io\swagger\api\CancionesidCancionApi.class
-io\swagger\model\ArtistaEntity.class
 io\swagger\services\ElementoService.class
 io\swagger\api\CancionesApi.class
 io\swagger\configuration\LocalDateConverter.class
@@ -39,7 +38,10 @@ io\swagger\configuration\CustomInstantDeserializer$8.class
 io\swagger\model\Elemento.class
 io\swagger\configuration\CustomInstantDeserializer$4.class
 io\swagger\controllers\ElementosApiController.class
+io\swagger\model\CancionInput.class
+io\swagger\services\ArtistaClient.class
 io\swagger\model\Artista.class
+io\swagger\services\ArtistaClient$1.class
 io\swagger\repository\ElementoRepository.class
 io\swagger\model\ElementoEntity.class
 io\swagger\configuration\CustomInstantDeserializer.class

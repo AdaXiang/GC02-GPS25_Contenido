@@ -11,7 +11,9 @@ C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservici
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\RFC3339DateFormat.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\ContenidosApi.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\ApiOriginFilter.java
+C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\CancionInput.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\configuration\JacksonConfiguration.java
+C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\ArtistaClient.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\NotFoundException.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\CancionEntity.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\CancionesidCancionApi.java
@@ -34,7 +36,6 @@ C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservici
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\repository\ElementoRepository.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\configuration\NotUndefinedValidator.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\CancionService.java
-C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\ArtistaEntity.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\ContenidoService.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\GeneroService.java
 C:\Users\adaxi\Desktop\microservicioContenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\GeneroEntity.java

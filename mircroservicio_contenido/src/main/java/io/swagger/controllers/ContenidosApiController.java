@@ -1,9 +1,9 @@
 package io.swagger.controllers;
 
 import io.swagger.api.ContenidosApi;
+import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Contenido;
 import io.swagger.model.Elemento;
-import io.swagger.model.ElementoEntity;
 import io.swagger.model.ErrorResponse;
 import io.swagger.services.ContenidoService;
 import io.swagger.services.ElementoService;

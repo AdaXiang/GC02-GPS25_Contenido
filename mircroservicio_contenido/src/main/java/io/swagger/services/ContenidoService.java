@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Contenido;
 import io.swagger.model.Elemento;
-import io.swagger.model.ElementoEntity;
 import io.swagger.model.Genero;
 import io.swagger.repository.ElementoRepository;
 

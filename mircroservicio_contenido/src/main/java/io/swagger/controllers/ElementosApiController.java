@@ -1,11 +1,8 @@
 package io.swagger.controllers;
 
 import io.swagger.api.ElementosApi;
-import io.swagger.model.Elemento;
-import io.swagger.model.ElementoEntity;
-import io.swagger.model.ElementoInput;
+import io.swagger.entity.ElementoEntity;
 import io.swagger.model.*;
-import io.swagger.model.ErrorResponse;
 import io.swagger.services.ElementoService;
 import java.util.Optional;
 

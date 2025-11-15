@@ -1,6 +1,6 @@
 package io.swagger.services;
 
-import io.swagger.model.CancionEntity;
+import io.swagger.entity.CancionEntity;
 import io.swagger.repository.CancionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

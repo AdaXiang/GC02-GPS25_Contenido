@@ -1,6 +1,6 @@
 package io.swagger.services;
 
-import io.swagger.model.GeneroEntity;
+import io.swagger.entity.GeneroEntity;
 import io.swagger.repository.GeneroRepository;
 import org.springframework.stereotype.Service;
 

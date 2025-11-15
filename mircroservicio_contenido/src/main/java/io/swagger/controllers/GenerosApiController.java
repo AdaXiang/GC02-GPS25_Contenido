@@ -1,9 +1,9 @@
 package io.swagger.controllers;
 import io.swagger.api.GenerosApi;
+import io.swagger.entity.ElementoEntity;
+import io.swagger.entity.GeneroEntity;
 import io.swagger.services.GeneroService;
-import io.swagger.model.GeneroEntity;
 import io.swagger.model.Elemento;
-import io.swagger.model.ElementoEntity;
 import io.swagger.model.ErrorResponse;
 import io.swagger.model.Genero;
 import com.fasterxml.jackson.databind.ObjectMapper;

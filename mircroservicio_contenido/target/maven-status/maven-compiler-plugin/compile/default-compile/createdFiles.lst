@@ -1,9 +1,11 @@
+io\swagger\entity\ElementoEntity.class
 io\swagger\api\ContenidosApi.class
 io\swagger\configuration\JacksonConfiguration.class
 io\swagger\api\ApiResponseMessage.class
 io\swagger\repository\CancionRepository.class
 io\swagger\configuration\CustomInstantDeserializer$3.class
 io\swagger\controllers\CancionesApiController.class
+io\swagger\entity\GeneroEntity.class
 io\swagger\repository\ContenidoRepository.class
 io\swagger\configuration\CustomInstantDeserializer$11.class
 io\swagger\configuration\CustomInstantDeserializer$6.class
@@ -43,7 +45,6 @@ io\swagger\services\ArtistaClient.class
 io\swagger\model\Artista.class
 io\swagger\services\ArtistaClient$1.class
 io\swagger\repository\ElementoRepository.class
-io\swagger\model\ElementoEntity.class
 io\swagger\configuration\CustomInstantDeserializer.class
 io\swagger\configuration\CustomInstantDeserializer$7.class
 io\swagger\Swagger2SpringBoot.class
@@ -52,9 +53,8 @@ io\swagger\api\ElementosApi.class
 io\swagger\configuration\NotUndefinedValidator.class
 io\swagger\configuration\NotUndefined.class
 io\swagger\model\ErrorResponse.class
-io\swagger\model\CancionEntity.class
 io\swagger\RFC3339DateFormat.class
-io\swagger\model\GeneroEntity.class
+io\swagger\entity\CancionEntity.class
 io\swagger\services\CancionService.class
 io\swagger\controllers\HomeController.class
 io\swagger\configuration\LocalDateTimeConverter.class

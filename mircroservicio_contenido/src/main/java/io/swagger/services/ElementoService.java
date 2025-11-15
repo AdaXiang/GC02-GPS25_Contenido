@@ -1,6 +1,6 @@
 package io.swagger.services;
 
-import io.swagger.model.ElementoEntity;
+import io.swagger.entity.ElementoEntity;
 import io.swagger.repository.ElementoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

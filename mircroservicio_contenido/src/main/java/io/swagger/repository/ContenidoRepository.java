@@ -1,6 +1,6 @@
 package io.swagger.repository;
+import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Contenido;
-import io.swagger.model.ElementoEntity;
 
 import java.time.LocalDate;
 import java.util.List;

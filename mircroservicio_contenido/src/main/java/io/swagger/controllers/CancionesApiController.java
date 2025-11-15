@@ -1,9 +1,10 @@
 package io.swagger.controllers;
 
 import io.swagger.api.CancionesApi;
+import io.swagger.entity.CancionEntity;
+import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Cancion;
 import io.swagger.model.Elemento;
-import io.swagger.model.ElementoEntity;
 import io.swagger.model.ErrorResponse;
 import io.swagger.services.CancionService;
 
@@ -32,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import io.swagger.model.CancionEntity;
+
 import io.swagger.model.CancionInput;
 
 import javax.validation.Valid;

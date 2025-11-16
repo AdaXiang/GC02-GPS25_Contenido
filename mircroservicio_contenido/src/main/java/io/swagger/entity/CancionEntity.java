@@ -13,8 +13,8 @@ public class CancionEntity implements Serializable {
     @Id
     @Column(name = "IDELEMENTO")
     private Integer id;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
     @JoinColumn(name = "IDELEMENTO")
     private ElementoEntity elemento;
@@ -32,14 +32,6 @@ public class CancionEntity implements Serializable {
     // =============================
     // Getters y Setters
     // =============================
-
-    public Integer getIdElemento() {
-        return elemento.getId();
-    }
-
-    public void setIdElemento(Integer idElemento) {
-        this.elemento.setId(idElemento);
-    }
 
     public Integer getId() {
         return id;

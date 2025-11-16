@@ -6,7 +6,9 @@ import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Cancion;
 import io.swagger.model.Elemento;
 import io.swagger.model.ErrorResponse;
+import io.swagger.repository.ElementoRepository;
 import io.swagger.services.CancionService;
+import io.swagger.services.ElementoService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,12 +54,14 @@ public class CancionesApiController implements CancionesApi {
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
     private final CancionService cancionService;
+    private final ElementoService elementoService;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService) {
+    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService, ElementoService elementoService) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.cancionService = cancionService;
+        this.elementoService = elementoService;
     }
 
     @GetMapping("/canciones/album/{idAlbum}")
@@ -113,18 +117,46 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @Override
-    public ResponseEntity<CancionInput> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<CancionInput>(objectMapper.readValue("\"\"", CancionInput.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<CancionInput>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
+        // 1. Crear Elemento
+        ElementoEntity elemento = new ElementoEntity();
+        elemento.setNombre(body.getNombre());
+        elemento.setDescripcion(body.getDescripcion());
+        elemento.setPrecio(body.getPrecio());
+        elemento.setNumventas(0);
+        elemento.setValoracion(0);
+        elemento.setEsnovedad(false);
+        elemento.setEsalbum(false); // Es canción
+        elemento.setArtista(body.getArtista());
+        elemento.setGenero(body.getGenero());
+        elemento.setSubgenero(body.getSubgenero());
+        elemento.setUrlFoto(body.getUrlFoto());
+
+        // Guardar elemento → genera ID
+        elemento = elementoService.save(elemento);
+        System.out.println("Elemento creado con ID: " + elemento.getId());
+
+        // 2. Crear Canción con el mismo ID
+        CancionEntity cancion = new CancionEntity();
+        cancion.setElemento(elemento);        // Relación
+        cancion.setNombreAudio(body.getNombreAudio());
+        cancion.setNumRep(body.getNumRep());
+
+        // Si tiene álbum
+        if (body.getIdAlbum() != null) {
+            ElementoEntity album = elementoService.getByIdOrThrow(body.getIdAlbum());
+            cancion.setAlbum(album);
+        }
+        else {
+            cancion.setAlbum(null);
         }
 
-        return new ResponseEntity<CancionInput>(HttpStatus.NOT_IMPLEMENTED);
+
+        // Guardar canción
+        cancion = cancionService.save(cancion);
+
+        // Convertir a modelo Swagger
+        return ResponseEntity.status(HttpStatus.CREATED).body(cancionService.convertToInputModel(cancion));
     }
 
     @Override

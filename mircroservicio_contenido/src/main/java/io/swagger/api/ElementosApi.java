@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.Elemento;
 import io.swagger.model.ElementoInput;
+import io.swagger.model.ElementoPut;
 import io.swagger.model.ErrorResponse;
 import org.threeten.bp.LocalDate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -121,7 +122,7 @@ public interface ElementosApi {
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Elemento body
+    ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoPut body
 );
 
 }

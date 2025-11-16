@@ -3,9 +3,8 @@ package io.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.model.Artista;
-import io.swagger.model.Genero;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
 import org.springframework.validation.annotation.Validated;
 import org.openapitools.jackson.nullable.JsonNullable;
 import io.swagger.configuration.NotUndefined;
@@ -20,7 +19,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 @NotUndefined
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 
 
 public class ElementoInput   {
@@ -62,25 +61,19 @@ public class ElementoInput   {
 
   @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
-  private Genero genero = null;
+  private Integer genero = null;
 
   @JsonProperty("subgenero")
 
   @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
-  private Genero subgenero = null;
+  private Integer subgenero = null;
 
   @JsonProperty("artista")
 
   @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
-  private Artista artista = null;
-
-  @JsonProperty("tipoContenido")
-
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
-  private Integer tipoContenido = null;
+  private Integer artista = null;
 
 
   public ElementoInput nombre(String nombre) { 
@@ -223,7 +216,7 @@ public class ElementoInput   {
     this.esalbum = esalbum;
   }
 
-  public ElementoInput genero(Genero genero) { 
+  public ElementoInput genero(Integer genero) { 
 
     this.genero = genero;
     return this;
@@ -234,20 +227,20 @@ public class ElementoInput   {
    * @return genero
    **/
   
-  @Schema(description = "")
+  @Schema(example = "2", description = "")
   
 @Valid
-  public Genero getGenero() {  
+  public Integer getGenero() {  
     return genero;
   }
 
 
 
-  public void setGenero(Genero genero) { 
+  public void setGenero(Integer genero) { 
     this.genero = genero;
   }
 
-  public ElementoInput subgenero(Genero subgenero) { 
+  public ElementoInput subgenero(Integer subgenero) { 
 
     this.subgenero = subgenero;
     return this;
@@ -258,20 +251,20 @@ public class ElementoInput   {
    * @return subgenero
    **/
   
-  @Schema(description = "")
+  @Schema(example = "3", description = "")
   
 @Valid
-  public Genero getSubgenero() {  
+  public Integer getSubgenero() {  
     return subgenero;
   }
 
 
 
-  public void setSubgenero(Genero subgenero) { 
+  public void setSubgenero(Integer subgenero) { 
     this.subgenero = subgenero;
   }
 
-  public ElementoInput artista(Artista artista) { 
+  public ElementoInput artista(Integer artista) { 
 
     this.artista = artista;
     return this;
@@ -282,40 +275,17 @@ public class ElementoInput   {
    * @return artista
    **/
   
-  @Schema(description = "")
+  @Schema(example = "2", description = "")
   
 @Valid
-  public Artista getArtista() {  
+  public Integer getArtista() {  
     return artista;
   }
 
 
 
-  public void setArtista(Artista artista) { 
+  public void setArtista(Integer artista) { 
     this.artista = artista;
-  }
-
-  public ElementoInput tipoContenido(Integer tipoContenido) { 
-
-    this.tipoContenido = tipoContenido;
-    return this;
-  }
-
-  /**
-   * Get tipoContenido
-   * @return tipoContenido
-   **/
-  
-  @Schema(example = "2", description = "")
-  
-  public Integer getTipoContenido() {  
-    return tipoContenido;
-  }
-
-
-
-  public void setTipoContenido(Integer tipoContenido) { 
-    this.tipoContenido = tipoContenido;
   }
 
   @Override
@@ -335,13 +305,12 @@ public class ElementoInput   {
         Objects.equals(this.esalbum, elementoInput.esalbum) &&
         Objects.equals(this.genero, elementoInput.genero) &&
         Objects.equals(this.subgenero, elementoInput.subgenero) &&
-        Objects.equals(this.artista, elementoInput.artista) &&
-        Objects.equals(this.tipoContenido, elementoInput.tipoContenido);
+        Objects.equals(this.artista, elementoInput.artista);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nombre, descripcion, urlFoto, precio, esnovedad, esalbum, genero, subgenero, artista, tipoContenido);
+    return Objects.hash(nombre, descripcion, urlFoto, precio, esnovedad, esalbum, genero, subgenero, artista);
   }
 
   @Override
@@ -358,7 +327,6 @@ public class ElementoInput   {
     sb.append("    genero: ").append(toIndentedString(genero)).append("\n");
     sb.append("    subgenero: ").append(toIndentedString(subgenero)).append("\n");
     sb.append("    artista: ").append(toIndentedString(artista)).append("\n");
-    sb.append("    tipoContenido: ").append(toIndentedString(tipoContenido)).append("\n");
     sb.append("}");
     return sb.toString();
   }

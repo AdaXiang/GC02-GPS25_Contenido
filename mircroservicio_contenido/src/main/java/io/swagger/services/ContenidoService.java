@@ -12,16 +12,21 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import io.swagger.entity.ElementoEntity;
+import io.swagger.entity.GeneroEntity;
 import io.swagger.model.Contenido;
 import io.swagger.model.Elemento;
 import io.swagger.model.Genero;
 import io.swagger.repository.ElementoRepository;
+import io.swagger.repository.GeneroRepository;
 
 @Service
 public class ContenidoService {
 
     @Autowired
     private ElementoRepository elementoRepository;
+
+    @Autowired
+    private GeneroRepository generoRepository;
 
     @Autowired
     private ArtistaClient artistaClient;
@@ -39,7 +44,7 @@ public class ContenidoService {
         c.setNumventas(e.getNumventas());
         c.setValoracion(e.getValoracion());
         c.setEsnovedad(e.getEsnovedad());
-        c.setNombre(e.getUrlFoto());
+        c.setFotoamazon(e.getUrlFoto());
 
         // Convertimos fecha
         if (e.getFechacrea() != null) {
@@ -56,15 +61,38 @@ public class ContenidoService {
             c.setFechacrea( fechaThreeTen.atOffset(org.threeten.bp.ZoneOffset.UTC) );
         }
 
+        // Género
+        Genero g = new Genero();
+        Integer idGenero = e.getGenero();
 
-        // Género y subgénero pueden venir como IDs o entidades
-        Genero genero = new Genero();
-        genero.setId(e.getGenero());
-        c.setGenero(genero);
-        
-        Genero subgenero = new Genero();
-        subgenero.setId(e.getSubgenero());
-        c.setSubgenero(subgenero);
+        if (idGenero != null) {
+        GeneroEntity genero = generoRepository.findById(idGenero).orElse(null);
+        if (genero != null) {
+                g.setId(genero.getId());
+                g.setNombre(genero.getNombre());
+        } else {
+                g.setId(idGenero);
+                g.setNombre(null);
+        }
+        }
+        c.setGenero(g);
+
+        // Subgénero
+        Genero sub = new Genero();
+        Integer idSub = e.getSubgenero();
+
+        if (idSub != null) {
+        GeneroEntity subgenero = generoRepository.findById(idSub).orElse(null);
+        if (subgenero != null) {
+                sub.setId(subgenero.getId());
+                sub.setNombre(subgenero.getNombre());
+        } else {
+                sub.setId(idSub);
+                sub.setNombre(null);
+        }
+        }
+        c.setSubgenero(sub);
+
 
         // Asignar tipo desde esalbum
         if (e.getEsalbum() != null && e.getEsalbum()) {

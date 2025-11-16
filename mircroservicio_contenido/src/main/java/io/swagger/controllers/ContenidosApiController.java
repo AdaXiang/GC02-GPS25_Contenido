@@ -52,20 +52,6 @@ public class ContenidosApiController implements ContenidosApi {
 
     private final HttpServletRequest request;
 
-    private Elemento convertToModel(ElementoEntity entity) {
-        Elemento e = new Elemento();
-        e.setId(entity.getId());
-        e.setNombre(entity.getNombre());
-        e.setDescripcion(entity.getDescripcion());
-        e.setPrecio(entity.getPrecio());
-        e.setEsalbum(entity.getEsalbum());
-        e.setEsnovedad(entity.getEsnovedad());
-        e.setValoracion(entity.getValoracion());
-        e.setNumventas(entity.getNumventas());
-        e.setUrlFoto(entity.getUrlFoto());
-        return e;
-    }
-
     @org.springframework.beans.factory.annotation.Autowired
     public ContenidosApiController(ElementoService elementoService, ContenidoService contenidoService,ObjectMapper objectMapper, HttpServletRequest request) {
         this.elementoService = elementoService;

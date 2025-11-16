@@ -12,11 +12,11 @@ public class CancionEntity implements Serializable {
 
     @Id
     @Column(name = "IDELEMENTO")
-    @JoinColumn(name = "IDELEMENTO")
-    private Integer idElemento;
+    private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDELEMENTO", referencedColumnName = "ID", insertable = false, updatable = false)
+    @MapsId
+    @JoinColumn(name = "IDELEMENTO")
     private ElementoEntity elemento;
 
     @Column(name = "NOMBREAUDIO", nullable = false, length = 100)
@@ -26,7 +26,7 @@ public class CancionEntity implements Serializable {
     private Integer numRep = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDALBUM", referencedColumnName = "ID")
+    @JoinColumn(name = "IDALBUM")
     private ElementoEntity album;
 
     // =============================
@@ -34,11 +34,19 @@ public class CancionEntity implements Serializable {
     // =============================
 
     public Integer getIdElemento() {
-        return idElemento;
+        return elemento.getId();
     }
 
     public void setIdElemento(Integer idElemento) {
-        this.idElemento = idElemento;
+        this.elemento.setId(idElemento);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public ElementoEntity getElemento() {
@@ -80,7 +88,7 @@ public class CancionEntity implements Serializable {
     @Override
     public String toString() {
         return "CancionEntity{" +
-                "idElemento=" + idElemento +
+                "id=" + id +
                 ", nombreAudio='" + nombreAudio + '\'' +
                 ", numRep=" + numRep +
                 ", idAlbum=" + (album != null ? album.getId() : null) +

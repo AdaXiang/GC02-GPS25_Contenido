@@ -87,6 +87,11 @@ public class Elemento   {
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
   private Genero genero = null;
 
+  @JsonProperty("subgenero")
+  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
+  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  private Genero subgenero = null;
+
   @JsonProperty("artista")
 
   @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
@@ -413,5 +418,13 @@ public class Elemento   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  public Genero getSubgenero() {
+    return this.subgenero;
+  }
+
+  public void setSubgenero(Genero id2) {
+    this.subgenero = id2;
   }
 }

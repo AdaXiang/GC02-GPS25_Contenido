@@ -27,11 +27,11 @@ public class Usuario   {
 
   private Integer id = null;
 
-  @JsonProperty("nombreUsuario")
+  @JsonProperty("nombreusuario")
 
   private String nombreUsuario = null;
 
-  @JsonProperty("nombreReal")
+  @JsonProperty("nombrereal")
 
   private String nombreReal = null;
 
@@ -49,7 +49,7 @@ public class Usuario   {
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
   private OffsetDateTime fechaRegistro = null;
 
-  @JsonProperty("rutaFoto")
+  @JsonProperty("rutafoto")
 
   private String rutaFoto = null;
 

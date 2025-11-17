@@ -48,14 +48,11 @@ import java.util.stream.Collectors;
 public class ElementosApiController implements ElementosApi {
 
     private static final Logger log = LoggerFactory.getLogger(ElementosApiController.class);
-    @Autowired
     private final ElementoService elementoService;
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
-    @Autowired
     private final GeneroRepository generoRepository;
-    @Autowired
-    private ArtistaClient artistaClient;
+    private final ArtistaClient artistaClient;
 
     private Elemento convertToModel(ElementoEntity entity) {
         Elemento e = new Elemento();
@@ -101,8 +98,7 @@ public class ElementosApiController implements ElementosApi {
         e.setSubgenero(sub);
         // Artista
         if (entity.getArtista() != null) {
-            Artista a = new Artista();
-            a = artistaClient.obtenerArtistaPorId(entity.getArtista());
+            Artista a = artistaClient.obtenerArtistaPorId(entity.getArtista());
             e.setArtista(a);
         }
         return e;
@@ -114,6 +110,7 @@ public class ElementosApiController implements ElementosApi {
         this.objectMapper = objectMapper;
         this.request = request;
         this.generoRepository = generoRepository;
+        this.artistaClient = new ArtistaClient();
     }
 
     // GET /elementos

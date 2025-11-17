@@ -110,11 +110,8 @@ public class CancionService {
                 .collect(Collectors.toList());
     }       
 
-    public Cancion getById(Integer id) {
-        CancionEntity entity = cancionRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("No existe"));
-
-        return convertToModel(entity);
+    public Optional<CancionEntity> getById(Integer id) {
+        return cancionRepository.findById(id);
     }
 
     public CancionEntity save(CancionEntity elemento) {

@@ -25,9 +25,9 @@ import javax.validation.constraints.*;
 
 
 public class Artista extends Usuario  {
-  @JsonProperty("esNovedad")
+  @JsonProperty("esnovedad")
 
-  private Boolean esNovedad = null;
+  private Boolean esnovedad = null;
 
   @JsonProperty("oyentes")
 
@@ -42,9 +42,9 @@ public class Artista extends Usuario  {
   private Genero genero = null;
 
 
-  public Artista esNovedad(Boolean esNovedad) { 
+  public Artista esNovedad(Boolean esnovedad) { 
 
-    this.esNovedad = esNovedad;
+    this.esnovedad = esnovedad;
     return this;
   }
 
@@ -56,15 +56,15 @@ public class Artista extends Usuario  {
   @Schema(example = "true", required = true, description = "Indica si el artista es destacado o de reciente incorporación")
   
   @NotNull
-  public Boolean isEsNovedad() {  
-    return esNovedad;
+  public Boolean isEsnovedad() {  
+    return esnovedad;
   }
 
 
 
-  public void setEsNovedad(Boolean esNovedad) { 
+  public void setEsnovedad(Boolean esnovedad) { 
 
-    this.esNovedad = esNovedad;
+    this.esnovedad = esnovedad;
   }
 
   public Artista oyentes(Integer oyentes) { 
@@ -155,7 +155,7 @@ public class Artista extends Usuario  {
       return false;
     }
     Artista artista = (Artista) o;
-    return Objects.equals(this.esNovedad, artista.esNovedad) &&
+    return Objects.equals(this.esnovedad, artista.esnovedad) &&
         Objects.equals(this.oyentes, artista.oyentes) &&
         Objects.equals(this.valoracion, artista.valoracion) &&
         Objects.equals(this.genero, artista.genero) &&
@@ -164,7 +164,7 @@ public class Artista extends Usuario  {
 
   @Override
   public int hashCode() {
-    return Objects.hash(esNovedad, oyentes, valoracion, genero, super.hashCode());
+    return Objects.hash(esnovedad, oyentes, valoracion, genero, super.hashCode());
   }
 
   @Override
@@ -172,7 +172,7 @@ public class Artista extends Usuario  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Artista {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    esNovedad: ").append(toIndentedString(esNovedad)).append("\n");
+    sb.append("    esNovedad: ").append(toIndentedString(esnovedad)).append("\n");
     sb.append("    oyentes: ").append(toIndentedString(oyentes)).append("\n");
     sb.append("    valoracion: ").append(toIndentedString(valoracion)).append("\n");
     sb.append("    genero: ").append(toIndentedString(genero)).append("\n");

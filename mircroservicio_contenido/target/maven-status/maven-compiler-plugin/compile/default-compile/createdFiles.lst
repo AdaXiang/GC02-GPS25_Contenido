@@ -28,6 +28,7 @@ io\swagger\api\NotFoundException.class
 io\swagger\configuration\CustomInstantDeserializer$5.class
 io\swagger\configuration\CustomInstantDeserializer$FromIntegerArguments.class
 io\swagger\api\ApiException.class
+io\swagger\model\CancionPut.class
 io\swagger\repository\GeneroRepository.class
 io\swagger\configuration\CustomInstantDeserializer$2.class
 io\swagger\model\Contenido.class

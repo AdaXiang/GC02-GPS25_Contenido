@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.Cancion;
 import io.swagger.model.CancionInput;
+import io.swagger.model.CancionPut;
 import io.swagger.model.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -127,7 +128,7 @@ public interface CancionesApi {
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<CancionInput> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body
+    ResponseEntity<Cancion> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionPut body
 );
 
 }

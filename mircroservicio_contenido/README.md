@@ -126,3 +126,18 @@ Una vez que la aplicación se esté ejecutando (`http://localhost:8080`), puedes
 
   * Consulta la documentación de la API (Swagger UI) para ver los *endpoints* de gestión de contenidos.
 
+## 📂 Estructura del Proyecto
+
+El proyecto sigue una estructura de paquetes estándar para aplicaciones Spring Boot, utilizando la segregación de responsabilidades:
+
+| Paquete | Descripción |
+| :--- | :--- |
+| `api` | Contiene interfaces o clases relacionadas con la definición de la **API** y los modelos generados automáticamente, a menudo usados por la documentación (Swagger/OpenAPI). |
+| `configuration` | Almacena clases de **configuración** de Spring, como la configuración de seguridad (`WebSecurityConfig`), *beans* personalizados, o *config* de Swagger/OpenAPI. |
+| `controllers` | Contiene los **controladores REST** (`@RestController`). Estas clases manejan las peticiones HTTP entrantes, llaman a la capa de servicios y devuelven las respuestas. |
+| `entity` | Define las clases **Entity** de JPA (`@Entity`). Representan las tablas de la base de datos (Oracle) y son la capa de persistencia directa. |
+| `model` | Contiene las clases **Model** o DTO (Data Transfer Object). Estas clases se usan a menudo para la **entrada y salida** de datos en los controladores, separando la estructura de la base de datos de la estructura de la API. |
+| `repository` | Incluye las interfaces **Repository** (`JpaRepository`). Son responsables de la comunicación directa con la base de datos (CRUD), sin lógica de negocio. |
+| `services` | Contiene la lógica de **negocio** (`@Service`). Implementa las operaciones complejas y transaccionales, utilizando los *repositories* para la manipulación de datos. |
+
+

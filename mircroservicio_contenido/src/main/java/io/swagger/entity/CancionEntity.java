@@ -14,7 +14,7 @@ public class CancionEntity implements Serializable {
     @Column(name = "IDELEMENTO")
     private Integer id;
     
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @MapsId
     @JoinColumn(name = "IDELEMENTO")
     private ElementoEntity elemento;

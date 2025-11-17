@@ -12,7 +12,6 @@ import java.util.Optional;
 @Service
 public class ElementoService {
 
-    @Autowired
     private final ElementoRepository elementoRepository;
 
     public ElementoService(ElementoRepository elementoRepository) {
@@ -25,6 +24,11 @@ public class ElementoService {
 
     public Optional<ElementoEntity> getById(Integer id) {
         return elementoRepository.findById(id);
+    }
+
+    public ElementoEntity getByIdOrThrow(Integer id) {
+        return elementoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Elemento no encontrado: " + id));
     }
 
     public ElementoEntity save(ElementoEntity elemento) {

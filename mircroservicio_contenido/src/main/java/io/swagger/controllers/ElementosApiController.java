@@ -2,7 +2,10 @@ package io.swagger.controllers;
 
 import io.swagger.api.ElementosApi;
 import io.swagger.entity.ElementoEntity;
+import io.swagger.entity.GeneroEntity;
 import io.swagger.model.*;
+import io.swagger.repository.GeneroRepository;
+import io.swagger.services.ArtistaClient;
 import io.swagger.services.ElementoService;
 import java.util.Optional;
 
@@ -19,6 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,9 +48,14 @@ import java.util.stream.Collectors;
 public class ElementosApiController implements ElementosApi {
 
     private static final Logger log = LoggerFactory.getLogger(ElementosApiController.class);
+    @Autowired
     private final ElementoService elementoService;
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
+    @Autowired
+    private final GeneroRepository generoRepository;
+    @Autowired
+    private ArtistaClient artistaClient;
 
     private Elemento convertToModel(ElementoEntity entity) {
         Elemento e = new Elemento();
@@ -59,14 +68,52 @@ public class ElementosApiController implements ElementosApi {
         e.setValoracion(entity.getValoracion());
         e.setNumventas(entity.getNumventas());
         e.setUrlFoto(entity.getUrlFoto());
+        // Género
+        Genero g = new Genero();
+        Integer idGenero = entity.getGenero();
+
+        if (idGenero != null) {
+        GeneroEntity genero = generoRepository.findById(idGenero).orElse(null);
+        if (genero != null) {
+                g.setId(genero.getId());
+                g.setNombre(genero.getNombre());
+        } else {
+                g.setId(idGenero);
+                g.setNombre(null);
+        }
+        }
+        e.setGenero(g);
+
+        // Subgénero
+        Genero sub = new Genero();
+        Integer idSub = entity.getSubgenero();
+
+        if (idSub != null) {
+        GeneroEntity subgenero = generoRepository.findById(idSub).orElse(null);
+        if (subgenero != null) {
+                sub.setId(subgenero.getId());
+                sub.setNombre(subgenero.getNombre());
+        } else {
+                sub.setId(idSub);
+                sub.setNombre(null);
+        }
+        }
+        e.setSubgenero(sub);
+        // Artista
+        if (entity.getArtista() != null) {
+            Artista a = new Artista();
+            a = artistaClient.obtenerArtistaPorId(entity.getArtista());
+            e.setArtista(a);
+        }
         return e;
     }
 
     @org.springframework.beans.factory.annotation.Autowired
-    public ElementosApiController(ElementoService elementoService, ObjectMapper objectMapper, HttpServletRequest request) {
+    public ElementosApiController(ElementoService elementoService, ObjectMapper objectMapper, HttpServletRequest request, GeneroRepository generoRepository) {
         this.elementoService = elementoService;
         this.objectMapper = objectMapper;
         this.request = request;
+        this.generoRepository = generoRepository;
     }
 
     // GET /elementos
@@ -109,14 +156,15 @@ public class ElementosApiController implements ElementosApi {
     public ResponseEntity<Elemento> elementosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoInput body) {
         ElementoEntity entity = new ElementoEntity();
         entity.setNombre(body.getNombre());
-        //entity.setArtista(body.getArtista().getId());
+        entity.setArtista(body.getArtista());
         entity.setDescripcion(body.getDescripcion());
         entity.setPrecio(body.getPrecio());
         entity.setEsalbum(body.isEsalbum());
         entity.setEsnovedad(body.isEsnovedad());
         entity.setValoracion(0);
         entity.setNumventas(0);
-        //entity.setGenero(body.getGenero().getId());
+        entity.setGenero(body.getGenero());
+        entity.setSubgenero(body.getSubgenero());
         entity.setUrlFoto(body.getUrlFoto());
 
         ElementoEntity saved = elementoService.save(entity);
@@ -125,7 +173,7 @@ public class ElementosApiController implements ElementosApi {
 
     // PUT /elementos
     @Override
-    public ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Elemento body) {
+    public ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoPut body) {
         Optional<ElementoEntity> opt = elementoService.getById(body.getId());
         if (opt.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -138,6 +186,9 @@ public class ElementosApiController implements ElementosApi {
         if (body.getValoracion() != null) entity.setValoracion(body.getValoracion());
         if (body.getNumventas() != null) entity.setNumventas(body.getNumventas());
         if (body.getUrlFoto() != null) entity.setUrlFoto(body.getUrlFoto());
+        if (body.getGenero() != null) entity.setGenero(body.getGenero());
+        if (body.getSubgenero() != null) entity.setSubgenero(body.getSubgenero());
+        if (body.getArtista() != null) entity.setArtista(body.getArtista());
 
         ElementoEntity updated = elementoService.save(entity);
         return ResponseEntity.ok(convertToModel(updated));

@@ -6,7 +6,9 @@ import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Cancion;
 import io.swagger.model.Elemento;
 import io.swagger.model.ErrorResponse;
+import io.swagger.repository.ElementoRepository;
 import io.swagger.services.CancionService;
+import io.swagger.services.ElementoService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,34 +54,22 @@ public class CancionesApiController implements CancionesApi {
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
     private final CancionService cancionService;
-
-    // ============================================================
-    // Conversión Entity → Model (Swagger DTO)
-    // ============================================================
-    private Cancion convertToModel(CancionEntity entity) {
-        Cancion model = new Cancion();
-        model.setId(entity.getIdElemento());
-       // model.setNombreAudio(entity.getNombreAudio());
-        model.setValoracion(0); // si tu modelo lo requiere
-        model.setNumventas(entity.getNumRep());
-        if (entity.getAlbum() != null)
-            model.setDescripcion("Pertenece al álbum ID: " + entity.getAlbum().getId());
-        return model;
-    }
+    private final ElementoService elementoService;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService) {
+    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService, ElementoService elementoService) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.cancionService = cancionService;
+        this.elementoService = elementoService;
     }
 
     @GetMapping("/canciones/album/{idAlbum}")
     public ResponseEntity<List<Cancion>> cancionesAlbumIdAlbumGet(@Parameter(in = ParameterIn.PATH, description = "ID del álbum cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idAlbum") Integer idAlbum) {
-        List<Cancion> canciones = cancionService.getAll().stream()
-            .filter(c -> c.getAlbum() != null && c.getAlbum().getId().equals(idAlbum))
-            .map(this::convertToModel)
-            .collect(Collectors.toList());
+        List<Cancion> canciones = cancionService.getAll()
+                .stream()
+                .filter(c -> c.getIdAlbum() != null && c.getIdAlbum().equals(idAlbum))
+                .collect(Collectors.toList());
 
         if (canciones.isEmpty())
             return ResponseEntity.noContent().build();
@@ -89,12 +79,9 @@ public class CancionesApiController implements CancionesApi {
 
     @GetMapping("/canciones/artista/{idArtista}")
     public ResponseEntity<List<Cancion>> cancionesArtistaIdArtistaGet(@Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idArtista") Integer idArtista) {
-        // En tu modelo, la relación ARTISTA-CANCION se maneja indirectamente vía ELEMENTO
-        List<Cancion> canciones = cancionService.getAll().stream()
-                .filter(c -> c.getElemento() != null && 
-                             c.getElemento().getArtista() != null &&
-                             c.getElemento().getArtista().equals(idArtista))
-                .map(this::convertToModel)
+        List<Cancion> canciones = cancionService.getAll()
+                .stream()
+                .filter(c -> c.getArtista() != null && c.getArtista().equals(idArtista))
                 .collect(Collectors.toList());
 
         if (canciones.isEmpty())
@@ -105,11 +92,9 @@ public class CancionesApiController implements CancionesApi {
 
     @GetMapping("/canciones/genero/{idGenero}")
     public ResponseEntity<List<Cancion>> cancionesGeneroIdGeneroGet(@Parameter(in = ParameterIn.PATH, description = "ID del género cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero) {
-       List<Cancion> canciones = cancionService.getAll().stream()
-                .filter(c -> c.getElemento() != null &&
-                             c.getElemento().getGenero() != null &&
-                             c.getElemento().getGenero().equals(idGenero))
-                .map(this::convertToModel)
+       List<Cancion> canciones = cancionService.getAll()
+                .stream()
+                .filter(c -> c.getGenero() != null && c.getGenero().getId().equals(idGenero))
                 .collect(Collectors.toList());
 
         if (canciones.isEmpty())
@@ -122,14 +107,7 @@ public class CancionesApiController implements CancionesApi {
     @Override
     public ResponseEntity<List<Cancion>> cancionesGet(@Parameter(in = ParameterIn.QUERY, description = "ID del álbum al que pertenece la canción" ,schema=@Schema()) @Valid @RequestParam(value = "idAlbum", required = false) Integer idAlbum
             ,@Parameter(in = ParameterIn.QUERY, description = "Nombre de la canción" ,schema=@Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre) {
-          List<Cancion> canciones = cancionService.getAll().stream()
-                .filter(c -> (idAlbum == null || 
-                              (c.getAlbum() != null && c.getAlbum().getId().equals(idAlbum))) &&
-                             (nombre == null || 
-                              (c.getElemento() != null && c.getElemento().getNombre().toLowerCase().contains(nombre.toLowerCase()))))
-                .map(this::convertToModel)
-                .collect(Collectors.toList());
-
+          List<Cancion> canciones = cancionService.getAll();
         if (canciones.isEmpty())
             return ResponseEntity.noContent().build();
 
@@ -139,18 +117,46 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @Override
-    public ResponseEntity<CancionInput> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<CancionInput>(objectMapper.readValue("\"\"", CancionInput.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<CancionInput>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
+        // 1. Crear Elemento
+        ElementoEntity elemento = new ElementoEntity();
+        elemento.setNombre(body.getNombre());
+        elemento.setDescripcion(body.getDescripcion());
+        elemento.setPrecio(body.getPrecio());
+        elemento.setNumventas(0);
+        elemento.setValoracion(0);
+        elemento.setEsnovedad(false);
+        elemento.setEsalbum(false); // Es canción
+        elemento.setArtista(body.getArtista());
+        elemento.setGenero(body.getGenero());
+        elemento.setSubgenero(body.getSubgenero());
+        elemento.setUrlFoto(body.getUrlFoto());
+
+        // Guardar elemento → genera ID
+        elemento = elementoService.save(elemento);
+        System.out.println("Elemento creado con ID: " + elemento.getId());
+
+        // 2. Crear Canción con el mismo ID
+        CancionEntity cancion = new CancionEntity();
+        cancion.setElemento(elemento);        // Relación
+        cancion.setNombreAudio(body.getNombreAudio());
+        cancion.setNumRep(body.getNumRep());
+
+        // Si tiene álbum
+        if (body.getIdAlbum() != null) {
+            ElementoEntity album = elementoService.getByIdOrThrow(body.getIdAlbum());
+            cancion.setAlbum(album);
+        }
+        else {
+            cancion.setAlbum(null);
         }
 
-        return new ResponseEntity<CancionInput>(HttpStatus.NOT_IMPLEMENTED);
+
+        // Guardar canción
+        cancion = cancionService.save(cancion);
+
+        // Convertir a modelo Swagger
+        return ResponseEntity.status(HttpStatus.CREATED).body(cancionService.convertToInputModel(cancion));
     }
 
     @Override

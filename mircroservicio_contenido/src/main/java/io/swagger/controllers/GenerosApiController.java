@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,10 +73,8 @@ public class GenerosApiController implements GenerosApi {
         List<Genero> generos = entidades.stream()
                 .map(this::convertToModel)
                 .collect(Collectors.toList());
-       
         return ResponseEntity.ok(generos);
     }
-
     // DELETE
     public ResponseEntity<Void> generosIdGeneroDelete(@Parameter(in = ParameterIn.PATH, description = "ID del género a eliminar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero) {
         generoService.deleteGenero(idGenero);
@@ -92,16 +91,16 @@ public class GenerosApiController implements GenerosApi {
     // PUT
     public ResponseEntity<Genero> generosIdGeneroPut(@Parameter(in = ParameterIn.PATH, description = "ID del género a actualizar.", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero
         ,@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Genero body) {
+        
         // TODO
-        String accept = request.getHeader("Accept");
         try {
-            // 🔹 Verificamos si el género existe
+            //Verificamos si el género existe
             var existenteOpt = generoService.getGeneroById(idGenero);
             if (existenteOpt.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            // 🔹 Actualizamos los datos
+            //Actualizamos los datos
             var existente = existenteOpt.get();
             existente.setNombre(body.getNombre());
 
@@ -111,13 +110,7 @@ public class GenerosApiController implements GenerosApi {
             Genero genero = new Genero();
             genero.setId(actualizado.getId());
             genero.setNombre(actualizado.getNombre());
-
-            // 🔹 Devolvemos la respuesta si el cliente acepta JSON
-            if (accept != null && accept.contains("application/json")) {
-                return ResponseEntity.ok(genero);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-            }
+            return ResponseEntity.ok(genero);
 
         } catch (Exception e) {
             log.error("Error al actualizar el género con id " + idGenero, e);

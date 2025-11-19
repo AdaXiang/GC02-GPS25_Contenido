@@ -6,9 +6,11 @@ io\swagger\repository\CancionRepository.class
 io\swagger\configuration\CustomInstantDeserializer$3.class
 io\swagger\controllers\CancionesApiController.class
 io\swagger\entity\GeneroEntity.class
+io\swagger\api\UsuarioValoraElemApi.class
 io\swagger\repository\ContenidoRepository.class
 io\swagger\configuration\CustomInstantDeserializer$11.class
 io\swagger\configuration\CustomInstantDeserializer$6.class
+io\swagger\entity\UsuarioValoraElemEntity.class
 io\swagger\api\CancionesidCancionApi.class
 io\swagger\services\ElementoService.class
 io\swagger\api\CancionesApi.class
@@ -27,6 +29,7 @@ io\swagger\api\GenerosApi.class
 io\swagger\api\NotFoundException.class
 io\swagger\configuration\CustomInstantDeserializer$5.class
 io\swagger\configuration\CustomInstantDeserializer$FromIntegerArguments.class
+io\swagger\controllers\UsuarioValoraElemApiController.class
 io\swagger\api\ApiException.class
 io\swagger\model\CancionPut.class
 io\swagger\repository\GeneroRepository.class
@@ -39,11 +42,14 @@ io\swagger\model\Usuario.class
 io\swagger\configuration\CustomInstantDeserializer$10.class
 io\swagger\model\Genero.class
 io\swagger\configuration\CustomInstantDeserializer$8.class
+io\swagger\entity\UsuarioValoraElemId.class
 io\swagger\model\Elemento.class
 io\swagger\configuration\CustomInstantDeserializer$4.class
+io\swagger\services\UsuarioValoraElemService.class
 io\swagger\controllers\ElementosApiController.class
 io\swagger\model\CancionInput.class
 io\swagger\services\ArtistaClient.class
+io\swagger\repository\UsuarioValoraElemRepository.class
 io\swagger\model\Artista.class
 io\swagger\services\ArtistaClient$1.class
 io\swagger\configuration\OffsetDateTimeDeserializer.class
@@ -64,3 +70,4 @@ io\swagger\configuration\LocalDateTimeConverter.class
 io\swagger\controllers\ContenidosApiController.class
 io\swagger\controllers\GenerosApiController.class
 io\swagger\configuration\SwaggerDocumentationConfig.class
+io\swagger\model\UsuarioValoraElem.class

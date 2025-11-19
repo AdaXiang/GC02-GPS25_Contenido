@@ -2,14 +2,20 @@ C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\s
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\Contenido.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\GeneroService.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\CancionPut.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\controllers\UsuarioValoraElemApiController.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\Artista.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\UsuarioValoraElem.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\controllers\CancionesApiController.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\configuration\LocalDateConverter.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\repository\ElementoRepository.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\repository\UsuarioValoraElemRepository.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\CancionInput.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\ApiOriginFilter.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\UsuarioValoraElemService.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\entity\UsuarioValoraElemId.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\ContenidosApi.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\services\ArtistaClient.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\UsuarioValoraElemApi.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\controllers\ElementosApiController.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\Usuario.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\configuration\JacksonConfiguration.java
@@ -46,4 +52,5 @@ C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\s
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\Swagger2SpringBoot.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\api\ApiResponseMessage.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\controllers\GenerosApiController.java
+C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\entity\UsuarioValoraElemEntity.java
 C:\Users\adaxi\Desktop\Contenido\GC02-GPS25_Contenido\mircroservicio_contenido\src\main\java\io\swagger\model\ElementoPut.java

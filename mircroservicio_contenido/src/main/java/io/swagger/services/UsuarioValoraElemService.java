@@ -9,13 +9,31 @@ import io.swagger.entity.UsuarioValoraElemEntity;
 import io.swagger.entity.UsuarioValoraElemId;
 import io.swagger.repository.UsuarioValoraElemRepository;
 
+import io.swagger.entity.ElementoEntity;
+import io.swagger.model.Usuario;
+import io.swagger.model.UsuarioValoraElem;
+
+import io.swagger.repository.ElementoRepository;
+
+
 @Service
 public class UsuarioValoraElemService {
 
     private final UsuarioValoraElemRepository usuarioValoraElemRepository;
 
-    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository) {
+    private final ElementoRepository elementoRepository;
+
+    public UsuarioValoraElem converToModel(UsuarioValoraElemEntity entity) {
+        UsuarioValoraElem uve = new UsuarioValoraElem();
+        uve.setIduser(entity.getId().getIdUser());
+        uve.setIdelem(entity.getId().getIdElem());
+        uve.setValoracion(entity.getValoracion());
+        return uve;
+    }
+
+    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository, ElementoRepository elementoRepository) {
         this.usuarioValoraElemRepository = usuarioValoraElemRepository;
+        this.elementoRepository = elementoRepository;
     }
 
     // GET all
@@ -58,4 +76,14 @@ public class UsuarioValoraElemService {
     public void delete(UsuarioValoraElemId pk) {
         usuarioValoraElemRepository.deleteById(pk);
     }
+
+    public UsuarioValoraElem convertToInputModel(UsuarioValoraElemEntity entity) {
+        UsuarioValoraElem uve = new UsuarioValoraElem();
+        
+        uve.setIduser(entity.getId().getIdUser());
+        uve.setIdelem(entity.getId().getIdElem());
+        uve.setValoracion(entity.getValoracion());
+        return uve;
+    }
 }
+

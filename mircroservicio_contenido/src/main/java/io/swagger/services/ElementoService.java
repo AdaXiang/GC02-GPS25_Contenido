@@ -3,7 +3,6 @@ package io.swagger.services;
 import io.swagger.entity.ElementoEntity;
 import io.swagger.repository.ElementoRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

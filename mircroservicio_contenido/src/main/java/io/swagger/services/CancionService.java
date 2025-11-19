@@ -9,7 +9,6 @@ import io.swagger.model.Genero;
 import io.swagger.repository.CancionRepository;
 import io.swagger.repository.GeneroRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

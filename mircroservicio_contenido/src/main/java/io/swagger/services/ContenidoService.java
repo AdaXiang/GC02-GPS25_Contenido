@@ -3,18 +3,14 @@ package io.swagger.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
 
 import io.swagger.entity.ElementoEntity;
 import io.swagger.entity.GeneroEntity;
 import io.swagger.model.Contenido;
-import io.swagger.model.Elemento;
 import io.swagger.model.Genero;
 import io.swagger.repository.ElementoRepository;
 import io.swagger.repository.GeneroRepository;

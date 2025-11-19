@@ -1,9 +1,5 @@
 package io.swagger.repository;
 import io.swagger.entity.ElementoEntity;
-import io.swagger.model.Contenido;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

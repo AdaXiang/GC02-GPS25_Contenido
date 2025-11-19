@@ -3,43 +3,59 @@ package io.swagger.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import io.swagger.entity.UsuarioValoraElemEntity;
+import io.swagger.entity.UsuarioValoraElemId;
 import io.swagger.repository.UsuarioValoraElemRepository;
 
+@Service
 public class UsuarioValoraElemService {
-     private final UsuarioValoraElemRepository usuarioValoraElemRepository;
+
+    private final UsuarioValoraElemRepository usuarioValoraElemRepository;
 
     public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository) {
         this.usuarioValoraElemRepository = usuarioValoraElemRepository;
     }
 
-    // GET all UsuarioValoraElem
-    public List<UsuarioValoraElemEntity> getAllUsuarioValoraElems() {
+    // GET all
+    public List<UsuarioValoraElemEntity> getAll() {
         return usuarioValoraElemRepository.findAll();
     }
 
-    // GET UsuarioValoraElem by ID 
-    public Optional<UsuarioValoraElemEntity> getUsuarioValoraElemById(Integer id) {
-        return usuarioValoraElemRepository.findById(id);
+    // GET by composite ID
+    public Optional<UsuarioValoraElemEntity> getById(Integer idUser, Integer idElem) {
+        UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
+        return usuarioValoraElemRepository.findById(pk);
     }
 
-    // CREATE UsuarioValoraElem
-    public UsuarioValoraElemEntity createUsuarioValoraElem(UsuarioValoraElemEntity usuarioValoraElem) {
-        return usuarioValoraElemRepository.save(usuarioValoraElem);
+    // CREATE (insert rating)
+    public UsuarioValoraElemEntity create(Integer idUser, Integer idElem, Integer valoracion) {
+
+        UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
+
+        UsuarioValoraElemEntity entity = new UsuarioValoraElemEntity();
+        entity.setId(pk);
+        entity.setValoracion(valoracion);
+
+        return usuarioValoraElemRepository.save(entity);
     }
 
-    // UPDATE UsuarioValoraElem
-    public UsuarioValoraElemEntity updateUsuarioValoraElem(Integer id, UsuarioValoraElemEntity usuarioValoraElemDetails) {
-        return usuarioValoraElemRepository.findById(id)
-                .map(usuarioValoraElem -> {
-                    usuarioValoraElem.setValoracion(usuarioValoraElemDetails.getValoracion());
-                    return usuarioValoraElemRepository.save(usuarioValoraElem);
+    // UPDATE rating only
+    public UsuarioValoraElemEntity update(Integer idUser, Integer idElem, Integer valoracion) {
+
+        UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
+
+        return usuarioValoraElemRepository.findById(pk)
+                .map(e -> {
+                    e.setValoracion(valoracion);
+                    return usuarioValoraElemRepository.save(e);
                 })
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("No existe valoración"));
     }
 
-    // DELETE UsuarioValoraElem
-    public void deleteUsuarioValoraElem(Integer id, UsuarioValoraElemEntity usuarioValoraElem) {
-        usuarioValoraElemRepository.deleteById(id);
+    // DELETE
+    public void delete(UsuarioValoraElemId pk) {
+        usuarioValoraElemRepository.deleteById(pk);
     }
 }

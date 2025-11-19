@@ -56,17 +56,7 @@ public class UsuarioValoraElemApiController implements UsuarioValoraElemApi {
 
     // GET /UsuarioValoraElem
     public ResponseEntity<List<UsuarioValoraElem>> usuarioValoraElemGet() {
-    //    List<UsuarioValoraElem> lista = usuarioValoraElemService.getAllUsuarioValoraElems().stream().map(entity -> {
-    //        UsuarioValoraElem model = new UsuarioValoraElem();
-    //        model.setIduser(null);(entity.getId().getIdUser());
-    //        model.setIdelem(entity.getId().getIdElem());
-    //        model.setValoracion(entity.getValoracion());
-    //        model.setComentario(entity.getComentario());
-    //        if (entity.getFechaComentario() != null) {
-    //            model.setFechaComentario(entity.getFechaComentario().toString());
-    //        }
-    //        return model;
-    //    }).toList();
+       
        return new ResponseEntity<List<UsuarioValoraElem>>(HttpStatus.OK);
     }
 

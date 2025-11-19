@@ -4,46 +4,31 @@ import io.swagger.api.CancionesApi;
 import io.swagger.entity.CancionEntity;
 import io.swagger.entity.ElementoEntity;
 import io.swagger.model.Cancion;
-import io.swagger.model.Elemento;
-import io.swagger.model.ErrorResponse;
-import io.swagger.repository.ElementoRepository;
 import io.swagger.services.CancionService;
 import io.swagger.services.ElementoService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import io.swagger.model.CancionInput;
+import io.swagger.model.CancionPut;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
@@ -81,7 +66,7 @@ public class CancionesApiController implements CancionesApi {
     public ResponseEntity<List<Cancion>> cancionesArtistaIdArtistaGet(@Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idArtista") Integer idArtista) {
         List<Cancion> canciones = cancionService.getAll()
                 .stream()
-                .filter(c -> c.getArtista() != null && c.getArtista().equals(idArtista))
+                .filter(c -> c.getArtista() != null && c.getArtista().getId().equals(idArtista))
                 .collect(Collectors.toList());
 
         if (canciones.isEmpty())
@@ -111,9 +96,7 @@ public class CancionesApiController implements CancionesApi {
         if (canciones.isEmpty())
             return ResponseEntity.noContent().build();
 
-        return ResponseEntity.ok(canciones);
-
-        
+        return ResponseEntity.ok(canciones); 
     }
 
     @Override
@@ -160,17 +143,38 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @Override
-    public ResponseEntity<CancionInput> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<CancionInput>(objectMapper.readValue("\"\"", CancionInput.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<CancionInput>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<Cancion> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionPut body) {
+        Optional<ElementoEntity> opt = elementoService.getById(body.getIdElemento());
+        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+
+        Optional<CancionEntity> optCancion = cancionService.getById(body.getIdElemento());
+        if (optCancion.isEmpty()) return ResponseEntity.notFound().build();
+
+        ElementoEntity entity = opt.get();
+        CancionEntity cancionEntity = optCancion.get();
+
+        if (body.getNombre() != null) entity.setNombre(body.getNombre());
+        if (body.getDescripcion() != null) entity.setDescripcion(body.getDescripcion());
+        if (body.getPrecio() != null) entity.setPrecio(body.getPrecio());
+        if (body.isEsalbum() != null) entity.setEsalbum(body.isEsalbum());
+        if (body.isEsnovedad() != null) entity.setEsnovedad(body.isEsnovedad());
+        if (body.getValoracion() != null) entity.setValoracion(body.getValoracion());
+        if (body.getNumventas() != null) entity.setNumventas(body.getNumventas());
+        if (body.getUrlFoto() != null) entity.setUrlFoto(body.getUrlFoto());
+        if (body.getGenero() != null) entity.setGenero(body.getGenero());
+        if (body.getSubgenero() != null) entity.setSubgenero(body.getSubgenero());
+        if (body.getArtista() != null) entity.setArtista(body.getArtista());
+     
+        if (body.getNombreAudio() != null) cancionEntity.setNombreAudio(body.getNombreAudio());
+        if (body.getNumRep() != null) cancionEntity.setNumRep(body.getNumRep());
+        if (body.getIdAlbum() != null) {
+            ElementoEntity album = elementoService.getByIdOrThrow(body.getIdAlbum());
+            cancionEntity.setAlbum(album);
         }
 
-        return new ResponseEntity<CancionInput>(HttpStatus.NOT_IMPLEMENTED);
+        ElementoEntity updated = elementoService.save(entity);
+        CancionEntity updatedCancion = cancionService.save(cancionEntity);
+
+        return ResponseEntity.ok(cancionService.convertToModel(updatedCancion));
     }
 }

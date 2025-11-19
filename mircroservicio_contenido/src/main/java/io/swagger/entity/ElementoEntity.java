@@ -1,7 +1,6 @@
 package io.swagger.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 

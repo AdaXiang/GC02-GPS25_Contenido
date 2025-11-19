@@ -1,6 +1,5 @@
 package io.swagger.services;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.threeten.bp.OffsetDateTime;
@@ -61,7 +60,7 @@ public class ArtistaClient {
             c.setDescripcion((String) art.get("descripcion"));
             c.setNumventas((Integer) art.getOrDefault("oyentes", 0));
             c.setValoracion((Integer) art.getOrDefault("valoracion", 0));
-            c.setPrecio(null); // artistas no tienen precio
+            c.setPrecio((float) 0.0); // artistas no tienen precio
             c.setEsnovedad((Boolean) art.get("esnovedad"));
             c.setNombre((String) art.get("nombreusuario"));
             c.setFotoamazon((String) art.get("rutafoto"));
@@ -76,17 +75,22 @@ public class ArtistaClient {
     }
 
     public Artista obtenerArtistaPorId(Integer idArtista) {
-        String url = usuariosBaseUrl + "/artistas/" + idArtista;
+       String url = usuariosBaseUrl + "/artistas/" + idArtista;
 
-        ResponseEntity<Artista> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.GET,
-                        null,
-                        Artista.class
-                );
+        ResponseEntity<Artista> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                Artista.class
+        );
 
-        return response.getBody();
+        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            throw new RuntimeException("No se ha podido obtener el artista con id " + idArtista);
+        }
+
+        Artista artista = response.getBody();
+        // Si quieres asegurarte de que el id es el que tú usas en la URL:
+        return artista;
     }
 }
 

@@ -9,7 +9,6 @@ import io.swagger.model.Genero;
 import io.swagger.repository.CancionRepository;
 import io.swagger.repository.GeneroRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -110,11 +109,8 @@ public class CancionService {
                 .collect(Collectors.toList());
     }       
 
-    public Cancion getById(Integer id) {
-        CancionEntity entity = cancionRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("No existe"));
-
-        return convertToModel(entity);
+    public Optional<CancionEntity> getById(Integer id) {
+        return cancionRepository.findById(id);
     }
 
     public CancionEntity save(CancionEntity elemento) {

@@ -2,11 +2,9 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
-import org.openapitools.jackson.nullable.JsonNullable;
 import io.swagger.configuration.NotUndefined;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -27,11 +25,11 @@ public class Usuario   {
 
   private Integer id = null;
 
-  @JsonProperty("nombreUsuario")
+  @JsonProperty("nombreusuario")
 
   private String nombreUsuario = null;
 
-  @JsonProperty("nombreReal")
+  @JsonProperty("nombrereal")
 
   private String nombreReal = null;
 
@@ -49,7 +47,7 @@ public class Usuario   {
   @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
   private OffsetDateTime fechaRegistro = null;
 
-  @JsonProperty("rutaFoto")
+  @JsonProperty("rutafoto")
 
   private String rutaFoto = null;
 

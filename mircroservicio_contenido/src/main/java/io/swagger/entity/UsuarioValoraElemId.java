@@ -13,6 +13,8 @@ public class UsuarioValoraElemId implements Serializable{
     @Column(name = "IDELEM")
     private Integer idElem;
 
+    public UsuarioValoraElemId() {} 
+    
     public UsuarioValoraElemId(Integer idUser2, Integer idElem2) {
         this.idUser = idUser2;
         this.idElem = idElem2;

@@ -35,10 +35,20 @@ public interface UsuarioValoraElemApi {
         @ApiResponse(responseCode = "200", description = "Lista de valoraciones obtenida correctamente.", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UsuarioValoraElem.class)))),
         
         @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/UsuarioValoraElem",
+    @RequestMapping(value = "/usuarioValoraElem",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<UsuarioValoraElem>> usuarioValoraElemGet();
+
+    @Operation(summary = "Obtener todas las valoraciones de un elemento por usuarios", description = "Devuelve todas las valoraciones realizadas por los usuarios a un elemento.", tags={ "Valoraciones" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Lista de valoraciones obtenida correctamente.", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UsuarioValoraElem.class)))),
+        
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
+    @RequestMapping(value = "/usuarioValoraElem/{idelemento}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<UsuarioValoraElem>> getComentariosElem(@Parameter(in = ParameterIn.PATH, description = "ID del elemento", required=true, schema=@Schema()) @PathVariable("idelemento") Integer idelemento);
 
 
     @Operation(summary = "Eliminar la valoración de un usuario para un elemento", description = "Borra la valoración realizada por un usuario a un elemento específico.", security = {
@@ -47,7 +57,7 @@ public interface UsuarioValoraElemApi {
         @ApiResponse(responseCode = "204", description = "Valoración eliminada correctamente (sin cuerpo de respuesta)."),
         
         @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/UsuarioValoraElem/{idUsuario}/{idElemento}",
+    @RequestMapping(value = "/usuarioValoraElem/{idUsuario}/{idElemento}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
     ResponseEntity<Void> usuarioValoraElemIdUsuarioIdElementoDelete(@Parameter(in = ParameterIn.PATH, description = "ID del usuario", required=true, schema=@Schema()) @PathVariable("idUsuario") Integer idUsuario
@@ -60,7 +70,7 @@ public interface UsuarioValoraElemApi {
         @ApiResponse(responseCode = "200", description = "Resultado de la verificación.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))),
         
         @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/UsuarioValoraElem/{idUsuario}/{idElemento}",
+    @RequestMapping(value = "/usuarioValoraElem/{idUsuario}/{idElemento}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Integer> usuarioValoraElemIdUsuarioIdElementoGet(@Parameter(in = ParameterIn.PATH, description = "ID del usuario", required=true, schema=@Schema()) @PathVariable("idUsuario") Integer idUsuario
@@ -76,7 +86,7 @@ public interface UsuarioValoraElemApi {
         @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
         
         @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/UsuarioValoraElem",
+    @RequestMapping(value = "/usuarioValoraElem",
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.POST)
@@ -92,12 +102,11 @@ public interface UsuarioValoraElemApi {
         @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
         
         @ApiResponse(responseCode = "500", description = "Error interno del servidor.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))) })
-    @RequestMapping(value = "/UsuarioValoraElem",
+    @RequestMapping(value = "/usuarioValoraElem",
         produces = { "application/json" }, 
         consumes = { "application/json" }, 
         method = RequestMethod.PUT)
-    ResponseEntity<UsuarioValoraElem> usuarioValoraElemPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody UsuarioValoraElem body
-);
+    ResponseEntity<UsuarioValoraElem> usuarioValoraElemPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody UsuarioValoraElem body);
 
 }
 

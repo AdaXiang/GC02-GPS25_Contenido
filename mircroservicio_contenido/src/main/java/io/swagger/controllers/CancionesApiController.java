@@ -92,7 +92,7 @@ public class CancionesApiController implements CancionesApi {
     @Override
     public ResponseEntity<List<Cancion>> cancionesGet(@Parameter(in = ParameterIn.QUERY, description = "ID del álbum al que pertenece la canción" ,schema=@Schema()) @Valid @RequestParam(value = "idAlbum", required = false) Integer idAlbum
             ,@Parameter(in = ParameterIn.QUERY, description = "Nombre de la canción" ,schema=@Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre) {
-          List<Cancion> canciones = cancionService.getAll();
+        List<Cancion> canciones = cancionService.getAll();
         if (canciones.isEmpty())
             return ResponseEntity.noContent().build();
 

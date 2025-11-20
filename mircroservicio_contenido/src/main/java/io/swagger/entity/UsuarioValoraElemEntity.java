@@ -1,5 +1,6 @@
 package io.swagger.entity;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -69,5 +70,8 @@ public class UsuarioValoraElemEntity {
     }
     public void setFechaComentario(LocalDateTime fechaComentario) {
         this.fechaComentario = fechaComentario;
+    }
+    public void setFechaComentario(Date valueOf) {
+        this.fechaComentario = valueOf.toLocalDate().atStartOfDay();
     }
 }

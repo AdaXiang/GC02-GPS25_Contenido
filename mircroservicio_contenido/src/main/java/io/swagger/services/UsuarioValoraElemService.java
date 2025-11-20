@@ -21,19 +21,8 @@ public class UsuarioValoraElemService {
 
     private final UsuarioValoraElemRepository usuarioValoraElemRepository;
 
-    private final ElementoRepository elementoRepository;
-
-    public UsuarioValoraElem converToModel(UsuarioValoraElemEntity entity) {
-        UsuarioValoraElem uve = new UsuarioValoraElem();
-        uve.setIduser(entity.getId().getIdUser());
-        uve.setIdelem(entity.getId().getIdElem());
-        uve.setValoracion(entity.getValoracion());
-        return uve;
-    }
-
-    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository, ElementoRepository elementoRepository) {
+    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository) {
         this.usuarioValoraElemRepository = usuarioValoraElemRepository;
-        this.elementoRepository = elementoRepository;
     }
 
     // GET all
@@ -41,35 +30,21 @@ public class UsuarioValoraElemService {
         return usuarioValoraElemRepository.findAll();
     }
 
-    // GET by composite ID
+    // GET espfecífico
     public Optional<UsuarioValoraElemEntity> getById(Integer idUser, Integer idElem) {
         UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
         return usuarioValoraElemRepository.findById(pk);
     }
 
-    // CREATE (insert rating)
-    public UsuarioValoraElemEntity create(Integer idUser, Integer idElem, Integer valoracion) {
-
-        UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
-
-        UsuarioValoraElemEntity entity = new UsuarioValoraElemEntity();
-        entity.setId(pk);
-        entity.setValoracion(valoracion);
-
-        return usuarioValoraElemRepository.save(entity);
+    // GET by idelem
+    public List<UsuarioValoraElemEntity> getByIdelem(Integer idelem) {
+        return usuarioValoraElemRepository.findByIdIdElem(idelem);
     }
 
-    // UPDATE rating only
-    public UsuarioValoraElemEntity update(Integer idUser, Integer idElem, Integer valoracion) {
 
-        UsuarioValoraElemId pk = new UsuarioValoraElemId(idUser, idElem);
-
-        return usuarioValoraElemRepository.findById(pk)
-                .map(e -> {
-                    e.setValoracion(valoracion);
-                    return usuarioValoraElemRepository.save(e);
-                })
-                .orElseThrow(() -> new RuntimeException("No existe valoración"));
+    // CREATE (insert rating)
+    public UsuarioValoraElemEntity create(UsuarioValoraElemEntity uve) {
+        return usuarioValoraElemRepository.save(uve);
     }
 
     // DELETE

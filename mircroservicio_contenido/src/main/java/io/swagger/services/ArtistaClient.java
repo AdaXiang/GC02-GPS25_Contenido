@@ -18,6 +18,8 @@ import io.swagger.model.Artista;
 @Service
 public class ArtistaClient {
 
+    // IMPORTANTE: Asegúrate de que este puerto (3000) es donde corre tu backend de usuarios.
+    // Si usas otro puerto (ej. 8080), cámbialo aquí.
     private String usuariosBaseUrl = "http://localhost:3000/api/usuarios";
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -27,55 +29,102 @@ public class ArtistaClient {
 
         String url = usuariosBaseUrl + "/artistas";
 
+        // Usamos ParameterizedTypeReference para asegurar que recibimos una Lista de Mapas
         ResponseEntity<List<Map<String, Object>>> response =
                 restTemplate.exchange(
                         url,
                         HttpMethod.GET,
                         null,
-                        new ParameterizedTypeReference<>() {}
+                        new ParameterizedTypeReference<List<Map<String, Object>>>() {}
                 );
 
         List<Map<String, Object>> artistasJson = response.getBody();
-
-        // Convertimos los artistas del microservicio externo a Contenido
         List<Contenido> artistas = new ArrayList<>();
 
-        for (Map<String, Object> art : artistasJson) {
-            Contenido c = new Contenido();
+        if (artistasJson == null) {
+            return artistas;
+        }
 
-            c.setId((Integer) art.get("id"));
-            c.setNombre((String) art.get("nombreusuario"));
-            // Conversión explícita de String a OffsetDateTime
-            Object fechaObjeto = art.get("fecharegistro");
-            if (fechaObjeto instanceof String) {
-                try {
-                    // La cadena debe estar en formato ISO 8601 (ej. 2025-11-15T19:46:07+01:00)
-                    OffsetDateTime fecha = OffsetDateTime.parse((String) fechaObjeto);
-                    c.setFechacrea(fecha);
-                } catch (DateTimeParseException e) {
-                    // Manejo de error si el microservicio envía un formato incorrecto
-                    System.err.println("Error parseando la fecha de registro: " + fechaObjeto);
+        for (Map<String, Object> art : artistasJson) {
+            try {
+                Contenido c = new Contenido();
+
+                // --- FIX 1: Casteo seguro de IDs numéricos ---
+                Object idObj = art.get("id");
+                if (idObj instanceof Number) {
+                    c.setId(((Number) idObj).intValue());
                 }
+
+                c.setNombre((String) art.get("nombreusuario"));
+
+                // --- FIX 2: Parseo de fecha seguro ---
+                Object fechaObjeto = art.get("fecharegistro");
+                if (fechaObjeto instanceof String) {
+                    try {
+                        OffsetDateTime fecha = OffsetDateTime.parse((String) fechaObjeto);
+                        c.setFechacrea(fecha);
+                    } catch (DateTimeParseException e) {
+                        System.err.println("Error parseando fecha para artista ID " + idObj + ": " + fechaObjeto);
+                    }
+                }
+
+                c.setDescripcion((String) art.get("descripcion"));
+
+                // --- FIX 3: Valoración y Ventas (Manejo de Double a Integer) ---
+                // Si la valoración viene como 3.8 (Double), el cast directo a (Integer) fallaba.
+                Object oyentesObj = art.getOrDefault("oyentes", 0);
+                if (oyentesObj instanceof Number) {
+                    c.setNumventas(((Number) oyentesObj).intValue());
+                }
+
+                Object valObj = art.getOrDefault("valoracion", 0);
+                if (valObj instanceof Number) {
+                    // Convertimos cualquier número (Double, Float) a int de forma segura
+                    c.setValoracion(((Number) valObj).intValue());
+                }
+
+                c.setPrecio(0.0f); // Artistas no tienen precio
+
+                // Booleano seguro
+                Object esNovedadObj = art.get("esnovedad");
+                c.setEsnovedad(esNovedadObj instanceof Boolean ? (Boolean) esNovedadObj : false);
+
+                c.setFotoamazon((String) art.get("rutafoto"));
+
+                // --- FIX 4: GÉNERO (El error principal) ---
+                // El JSON suele traer un objeto: "genero": { "id": 1, ... }
+                // El código antiguo intentaba leerlo como Integer directamente y fallaba.
+                Genero g = new Genero();
+                Object generoObj = art.get("genero");
+
+                if (generoObj instanceof Map) {
+                    // Caso A: Es un objeto JSON (LinkedHashMap)
+                    Map<?, ?> generoMap = (Map<?, ?>) generoObj;
+                    Object idGenero = generoMap.get("id");
+                    if (idGenero instanceof Number) {
+                        g.setId(((Number) idGenero).intValue());
+                    }
+                } else if (generoObj instanceof Number) {
+                    // Caso B: Es solo el número ID
+                    g.setId(((Number) generoObj).intValue());
+                }
+
+                c.setGenero(g);
+                c.setTipo(0); // 0 = artista
+                artistas.add(c);
+
+            } catch (Exception e) {
+                // Si falla un artista concreto, lo logueamos y seguimos con el siguiente
+                System.err.println("Error mapeando un artista: " + e.getMessage());
+                e.printStackTrace();
             }
-            c.setDescripcion((String) art.get("descripcion"));
-            c.setNumventas((Integer) art.getOrDefault("oyentes", 0));
-            c.setValoracion((Integer) art.getOrDefault("valoracion", 0));
-            c.setPrecio((float) 0.0); // artistas no tienen precio
-            c.setEsnovedad((Boolean) art.get("esnovedad"));
-            c.setNombre((String) art.get("nombreusuario"));
-            c.setFotoamazon((String) art.get("rutafoto"));
-            Genero g = new Genero();
-            g.setId((Integer) art.get("genero"));
-            c.setGenero(g);
-            c.setTipo(0); // 0 = artista
-            artistas.add(c);
         }
 
         return artistas;
     }
 
     public Artista obtenerArtistaPorId(Integer idArtista) {
-       String url = usuariosBaseUrl + "/artistas/" + idArtista;
+        String url = usuariosBaseUrl + "/artistas/" + idArtista;
 
         ResponseEntity<Artista> response = restTemplate.exchange(
                 url,
@@ -88,9 +137,6 @@ public class ArtistaClient {
             throw new RuntimeException("No se ha podido obtener el artista con id " + idArtista);
         }
 
-        Artista artista = response.getBody();
-        // Si quieres asegurarte de que el id es el que tú usas en la URL:
-        return artista;
+        return response.getBody();
     }
 }
-

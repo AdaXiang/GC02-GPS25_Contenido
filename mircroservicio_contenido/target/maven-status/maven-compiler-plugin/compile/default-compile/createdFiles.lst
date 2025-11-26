@@ -63,6 +63,7 @@ io\swagger\configuration\NotUndefinedValidator.class
 io\swagger\configuration\NotUndefined.class
 io\swagger\model\ErrorResponse.class
 io\swagger\RFC3339DateFormat.class
+io\swagger\configuration\SecurityConfig.class
 io\swagger\entity\CancionEntity.class
 io\swagger\services\CancionService.class
 io\swagger\controllers\HomeController.class

@@ -104,6 +104,12 @@ public class ArtistaClient {
                     if (idGenero instanceof Number) {
                         g.setId(((Number) idGenero).intValue());
                     }
+                    //Meter genero en el artista
+                    Object nombreGen = generoMap.get("nombre");
+                    if (nombreGen instanceof String) {
+                        g.setNombre((String) nombreGen);
+                    }
+
                 } else if (generoObj instanceof Number) {
                     // Caso B: Es solo el número ID
                     g.setId(((Number) generoObj).intValue());

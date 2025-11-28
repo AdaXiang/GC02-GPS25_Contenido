@@ -48,6 +48,25 @@ public class ElementosApiController implements ElementosApi {
         e.setPrecio(entity.getPrecio());
         e.setEsalbum(entity.getEsalbum());
         e.setEsnovedad(entity.getEsnovedad());
+        // --- AÑADE ESTO ---
+        if (entity.getFechacrea() != null) {
+            // 1. Obtenemos la fecha original (java.time)
+            java.time.LocalDateTime fechaDb = entity.getFechacrea();
+
+            // 2. Construimos la fecha compatible con Swagger (org.threeten.bp)
+            // Copiamos año, mes, día, hora, minuto y segundo.
+            org.threeten.bp.LocalDateTime fechaCompatible = org.threeten.bp.LocalDateTime.of(
+                fechaDb.getYear(),
+                fechaDb.getMonthValue(),
+                fechaDb.getDayOfMonth(),
+                fechaDb.getHour(),
+                fechaDb.getMinute(),
+                fechaDb.getSecond()
+            );
+
+            // 3. Le asignamos una zona horaria (UTC) para convertirlo en OffsetDateTime
+            e.setFechacrea(org.threeten.bp.OffsetDateTime.of(fechaCompatible, org.threeten.bp.ZoneOffset.UTC));
+        }
         e.setValoracion(entity.getValoracion());
         e.setNumventas(entity.getNumventas());
         e.setUrlFoto(entity.getUrlFoto());

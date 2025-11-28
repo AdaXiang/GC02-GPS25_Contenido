@@ -162,7 +162,7 @@ public class ElementosApiController implements ElementosApi {
         entity.setDescripcion(body.getDescripcion());
         entity.setPrecio(body.getPrecio());
         entity.setEsalbum(body.isEsalbum());
-        entity.setEsnovedad(body.isEsnovedad());
+        entity.setEsnovedad(true);
         entity.setValoracion(0);
         entity.setNumventas(0);
         entity.setGenero(body.getGenero());

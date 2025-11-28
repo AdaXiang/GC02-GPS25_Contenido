@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface UsuarioValoraElemRepository extends JpaRepository<UsuarioValoraElemEntity, UsuarioValoraElemId>{
-    List<UsuarioValoraElemEntity> findByIdIdElem(Integer idElem);
+   List<UsuarioValoraElemEntity> findById_IdElem(Integer idElem);
+
 }

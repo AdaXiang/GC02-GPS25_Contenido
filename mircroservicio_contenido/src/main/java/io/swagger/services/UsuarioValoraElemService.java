@@ -3,6 +3,9 @@ package io.swagger.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Service;
 
 import io.swagger.entity.UsuarioValoraElemEntity;
@@ -10,7 +13,6 @@ import io.swagger.entity.UsuarioValoraElemId;
 import io.swagger.repository.UsuarioValoraElemRepository;
 
 import io.swagger.entity.ElementoEntity;
-import io.swagger.model.Usuario;
 import io.swagger.model.UsuarioValoraElem;
 
 import io.swagger.repository.ElementoRepository;
@@ -18,11 +20,15 @@ import io.swagger.repository.ElementoRepository;
 
 @Service
 public class UsuarioValoraElemService {
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final UsuarioValoraElemRepository usuarioValoraElemRepository;
+    private final ElementoRepository elementoRepository;
 
-    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository) {
+    public UsuarioValoraElemService(UsuarioValoraElemRepository usuarioValoraElemRepository, ElementoRepository elementoRepository) {
         this.usuarioValoraElemRepository = usuarioValoraElemRepository;
+        this.elementoRepository = elementoRepository;
     }
 
     // GET all
@@ -38,13 +44,32 @@ public class UsuarioValoraElemService {
 
     // GET by idelem
     public List<UsuarioValoraElemEntity> getByIdelem(Integer idelem) {
-        return usuarioValoraElemRepository.findByIdIdElem(idelem);
+        return usuarioValoraElemRepository.findById_IdElem(idelem);
     }
 
-
-    // CREATE (insert rating)
     public UsuarioValoraElemEntity create(UsuarioValoraElemEntity uve) {
-        return usuarioValoraElemRepository.save(uve);
+        // 1. Guardar la valoración
+        UsuarioValoraElemEntity saved = usuarioValoraElemRepository.save(uve);
+       
+        // 2. Conseguir todas las valoraciones del elemento
+        List<UsuarioValoraElemEntity> valoraciones =
+                usuarioValoraElemRepository.findById_IdElem(uve.getId().getIdElem());
+
+        // 3. Calcular la media
+        double media = valoraciones
+                .stream()
+                .mapToDouble(UsuarioValoraElemEntity::getValoracion)
+                .average()
+                .orElse(0.0);
+
+        // 4. Guardar la media en elemento
+        ElementoEntity elemento =
+                elementoRepository.findById(uve.getId().getIdElem()).orElseThrow();
+        int mediaEntero = (int) Math.round(media);
+        elemento.setValoracion(mediaEntero);
+        elementoRepository.save(elemento);
+
+        return saved;
     }
 
     // DELETE

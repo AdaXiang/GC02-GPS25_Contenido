@@ -19,10 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
@@ -56,13 +56,12 @@ public class ElementosApiController implements ElementosApi {
             // 2. Construimos la fecha compatible con Swagger (org.threeten.bp)
             // Copiamos año, mes, día, hora, minuto y segundo.
             org.threeten.bp.LocalDateTime fechaCompatible = org.threeten.bp.LocalDateTime.of(
-                fechaDb.getYear(),
-                fechaDb.getMonthValue(),
-                fechaDb.getDayOfMonth(),
-                fechaDb.getHour(),
-                fechaDb.getMinute(),
-                fechaDb.getSecond()
-            );
+                    fechaDb.getYear(),
+                    fechaDb.getMonthValue(),
+                    fechaDb.getDayOfMonth(),
+                    fechaDb.getHour(),
+                    fechaDb.getMinute(),
+                    fechaDb.getSecond());
 
             // 3. Le asignamos una zona horaria (UTC) para convertirlo en OffsetDateTime
             e.setFechacrea(org.threeten.bp.OffsetDateTime.of(fechaCompatible, org.threeten.bp.ZoneOffset.UTC));
@@ -75,14 +74,14 @@ public class ElementosApiController implements ElementosApi {
         Integer idGenero = entity.getGenero();
 
         if (idGenero != null) {
-        GeneroEntity genero = generoRepository.findById(idGenero).orElse(null);
-        if (genero != null) {
+            GeneroEntity genero = generoRepository.findById(idGenero).orElse(null);
+            if (genero != null) {
                 g.setId(genero.getId());
                 g.setNombre(genero.getNombre());
-        } else {
+            } else {
                 g.setId(idGenero);
                 g.setNombre(null);
-        }
+            }
         }
         e.setGenero(g);
 
@@ -91,14 +90,14 @@ public class ElementosApiController implements ElementosApi {
         Integer idSub = entity.getSubgenero();
 
         if (idSub != null) {
-        GeneroEntity subgenero = generoRepository.findById(idSub).orElse(null);
-        if (subgenero != null) {
+            GeneroEntity subgenero = generoRepository.findById(idSub).orElse(null);
+            if (subgenero != null) {
                 sub.setId(subgenero.getId());
                 sub.setNombre(subgenero.getNombre());
-        } else {
+            } else {
                 sub.setId(idSub);
                 sub.setNombre(null);
-        }
+            }
         }
         e.setSubgenero(sub);
         // Artista
@@ -110,7 +109,8 @@ public class ElementosApiController implements ElementosApi {
     }
 
     @org.springframework.beans.factory.annotation.Autowired
-    public ElementosApiController(ElementoService elementoService, ObjectMapper objectMapper, HttpServletRequest request, GeneroRepository generoRepository) {
+    public ElementosApiController(ElementoService elementoService, ObjectMapper objectMapper,
+            HttpServletRequest request, GeneroRepository generoRepository) {
         this.elementoService = elementoService;
         this.objectMapper = objectMapper;
         this.request = request;
@@ -120,26 +120,59 @@ public class ElementosApiController implements ElementosApi {
 
     // GET /elementos
     @Override
-    public ResponseEntity<List<Elemento>> elementosGet(@Parameter(in = ParameterIn.QUERY, description = "ID del género por el que se desea filtrar." ,schema=@Schema()) @Valid @RequestParam(value = "genero", required = false) Integer genero
-        ,@Parameter(in = ParameterIn.QUERY, description = "ID del subgénero por el que se desea filtrar." ,schema=@Schema()) @Valid @RequestParam(value = "subgenero", required = false) Integer subgenero
-        ,@Parameter(in = ParameterIn.QUERY, description = "Precio mínimo del contenido." ,schema=@Schema()) @Valid @RequestParam(value = "preciomin", required = false) Float preciomin
-        ,@Parameter(in = ParameterIn.QUERY, description = "Precio máximo del contenido." ,schema=@Schema()) @Valid @RequestParam(value = "preciomax", required = false) Float preciomax
-        ,@Parameter(in = ParameterIn.QUERY, description = "Fecha mínima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamin", required = false) LocalDate fechamin
-        ,@Parameter(in = ParameterIn.QUERY, description = "Fecha máxima de creación o publicación." ,schema=@Schema()) @Valid @RequestParam(value = "fechamax", required = false) LocalDate fechamax) {
-      
+    public ResponseEntity<List<Elemento>> elementosGet(
+            @Parameter(in = ParameterIn.QUERY, description = "ID del género por el que se desea filtrar.", schema = @Schema()) @Valid @RequestParam(value = "genero", required = false) Integer genero,
+            @Parameter(in = ParameterIn.QUERY, description = "ID del subgénero por el que se desea filtrar.", schema = @Schema()) @Valid @RequestParam(value = "subgenero", required = false) Integer subgenero,
+            @Parameter(in = ParameterIn.QUERY, description = "Precio mínimo del contenido.", schema = @Schema()) @Valid @RequestParam(value = "preciomin", required = false) Float preciomin,
+            @Parameter(in = ParameterIn.QUERY, description = "Precio máximo del contenido.", schema = @Schema()) @Valid @RequestParam(value = "preciomax", required = false) Float preciomax,
+            @Parameter(in = ParameterIn.QUERY, description = "Fecha mínima de creación o publicación.", schema = @Schema()) @Valid @RequestParam(value = "fechamin", required = false) LocalDate fechamin,
+            @Parameter(in = ParameterIn.QUERY, description = "Fecha máxima de creación o publicación.", schema = @Schema()) @Valid @RequestParam(value = "fechamax", required = false) LocalDate fechamax) {
+
         List<ElementoEntity> entidades = elementoService.getAll();
         List<Elemento> elementos = entidades.stream()
-        .filter(e -> preciomin == null || e.getPrecio() >= preciomin)
-        .filter(e -> preciomax == null || e.getPrecio() <= preciomax)
-        .filter(e -> genero == null || e.getGenero().equals(genero))
-        .map(this::convertToModel)
-        .collect(Collectors.toList());
+                .filter(e -> preciomin == null || e.getPrecio() >= preciomin)
+                .filter(e -> preciomax == null || e.getPrecio() <= preciomax)
+                .filter(e -> genero == null || e.getGenero().equals(genero))
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(elementos);
+    }
+
+    @GetMapping("/elementos/artista/{idArtista}")
+    public ResponseEntity<List<Elemento>> elementosArtistaIdArtistaGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas elementos se desean consultar", required = true, schema = @Schema()) @PathVariable("idArtista") Integer idArtista) {
+        List<Elemento> elementos = elementoService.getAll()
+                .stream()
+                .filter(c -> c.getArtista() != null && c.getArtista().equals(idArtista))
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        if (elementos.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(elementos);
+    }
+
+    @GetMapping("/elementos/genero/{idGenero}")
+    public ResponseEntity<List<Elemento>> elementosGeneroIdGeneroGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del género cuyas elementos se desean consultar", required = true, schema = @Schema()) @PathVariable("idGenero") Integer idGenero) {
+        List<Elemento> elementos = elementoService.getAll()
+                .stream()
+                .filter(c -> c.getGenero() != null && c.getGenero().equals(idGenero))
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
+
+        if (elementos.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(elementos);
+
     }
 
     // DELETE /elementos/{id}
     @Override
-    public ResponseEntity<Void> elementosIdDelete(@Parameter(in = ParameterIn.PATH, description = "ID del contenido que se desea eliminar", required=true, schema=@Schema()) @PathVariable("id") Integer id) {
+    public ResponseEntity<Void> elementosIdDelete(
+            @Parameter(in = ParameterIn.PATH, description = "ID del contenido que se desea eliminar", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
         elementoService.delete(id);
         return ResponseEntity.noContent().build();
 
@@ -147,15 +180,17 @@ public class ElementosApiController implements ElementosApi {
 
     // GET /elementos/{id}
     @Override
-    public ResponseEntity<Elemento> elementosIdGet(@Parameter(in = ParameterIn.PATH, description = "ID del contenido a consultar", required=true, schema=@Schema()) @PathVariable("id") Integer id) {
+    public ResponseEntity<Elemento> elementosIdGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del contenido a consultar", required = true, schema = @Schema()) @PathVariable("id") Integer id) {
         Optional<ElementoEntity> opt = elementoService.getById(id);
         return opt.map(e -> ResponseEntity.ok(convertToModel(e)))
-                  .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // POST /elementos
     @Override
-    public ResponseEntity<Elemento> elementosPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoInput body) {
+    public ResponseEntity<Elemento> elementosPost(
+            @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody ElementoInput body) {
         ElementoEntity entity = new ElementoEntity();
         entity.setNombre(body.getNombre());
         entity.setArtista(body.getArtista());
@@ -175,26 +210,39 @@ public class ElementosApiController implements ElementosApi {
 
     // PUT /elementos
     @Override
-    public ResponseEntity<Elemento> elementosPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody ElementoPut body) {
+    public ResponseEntity<Elemento> elementosPut(
+            @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody ElementoPut body) {
         Optional<ElementoEntity> opt = elementoService.getById(body.getId());
-        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
 
         ElementoEntity entity = opt.get();
-        if (body.getNombre() != null) entity.setNombre(body.getNombre());
-        if (body.getDescripcion() != null) entity.setDescripcion(body.getDescripcion());
-        if (body.getPrecio() != null) entity.setPrecio(body.getPrecio());
-        if (body.isEsalbum() != null) entity.setEsalbum(body.isEsalbum());
-        if (body.isEsnovedad() != null) entity.setEsnovedad(body.isEsnovedad());
-        if (body.getValoracion() != null) entity.setValoracion(body.getValoracion());
-        if (body.getNumventas() != null) entity.setNumventas(body.getNumventas());
-        if (body.getUrlFoto() != null) entity.setUrlFoto(body.getUrlFoto());
-        if (body.getGenero() != null) entity.setGenero(body.getGenero());
-        if (body.getSubgenero() != null) entity.setSubgenero(body.getSubgenero());
-        if (body.getArtista() != null) entity.setArtista(body.getArtista());
+        if (body.getNombre() != null)
+            entity.setNombre(body.getNombre());
+        if (body.getDescripcion() != null)
+            entity.setDescripcion(body.getDescripcion());
+        if (body.getPrecio() != null)
+            entity.setPrecio(body.getPrecio());
+        if (body.isEsalbum() != null)
+            entity.setEsalbum(body.isEsalbum());
+        if (body.isEsnovedad() != null)
+            entity.setEsnovedad(body.isEsnovedad());
+        if (body.getValoracion() != null)
+            entity.setValoracion(body.getValoracion());
+        if (body.getNumventas() != null)
+            entity.setNumventas(body.getNumventas());
+        if (body.getUrlFoto() != null)
+            entity.setUrlFoto(body.getUrlFoto());
+        if (body.getGenero() != null)
+            entity.setGenero(body.getGenero());
+        if (body.getSubgenero() != null)
+            entity.setSubgenero(body.getSubgenero());
+        if (body.getArtista() != null)
+            entity.setArtista(body.getArtista());
 
         ElementoEntity updated = elementoService.save(entity);
         return ResponseEntity.ok(convertToModel(updated));
-         
+
     }
 
 }

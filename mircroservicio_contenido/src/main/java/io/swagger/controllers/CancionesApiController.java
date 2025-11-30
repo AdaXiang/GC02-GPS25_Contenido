@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import io.swagger.model.CancionInput;
 import io.swagger.model.CancionPut;
 
@@ -42,7 +41,8 @@ public class CancionesApiController implements CancionesApi {
     private final ElementoService elementoService;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService, ElementoService elementoService) {
+    public CancionesApiController(ObjectMapper objectMapper, HttpServletRequest request, CancionService cancionService,
+            ElementoService elementoService) {
         this.objectMapper = objectMapper;
         this.request = request;
         this.cancionService = cancionService;
@@ -50,7 +50,8 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @GetMapping("/canciones/album/{idAlbum}")
-    public ResponseEntity<List<Cancion>> cancionesAlbumIdAlbumGet(@Parameter(in = ParameterIn.PATH, description = "ID del álbum cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idAlbum") Integer idAlbum) {
+    public ResponseEntity<List<Cancion>> cancionesAlbumIdAlbumGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del álbum cuyas canciones se desean consultar", required = true, schema = @Schema()) @PathVariable("idAlbum") Integer idAlbum) {
         List<Cancion> canciones = cancionService.getAll()
                 .stream()
                 .filter(c -> c.getIdAlbum() != null && c.getIdAlbum().equals(idAlbum))
@@ -63,7 +64,8 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @GetMapping("/canciones/artista/{idArtista}")
-    public ResponseEntity<List<Cancion>> cancionesArtistaIdArtistaGet(@Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idArtista") Integer idArtista) {
+    public ResponseEntity<List<Cancion>> cancionesArtistaIdArtistaGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del artista cuyas canciones se desean consultar", required = true, schema = @Schema()) @PathVariable("idArtista") Integer idArtista) {
         List<Cancion> canciones = cancionService.getAll()
                 .stream()
                 .filter(c -> c.getArtista() != null && c.getArtista().getId().equals(idArtista))
@@ -76,8 +78,9 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @GetMapping("/canciones/genero/{idGenero}")
-    public ResponseEntity<List<Cancion>> cancionesGeneroIdGeneroGet(@Parameter(in = ParameterIn.PATH, description = "ID del género cuyas canciones se desean consultar", required=true, schema=@Schema()) @PathVariable("idGenero") Integer idGenero) {
-       List<Cancion> canciones = cancionService.getAll()
+    public ResponseEntity<List<Cancion>> cancionesGeneroIdGeneroGet(
+            @Parameter(in = ParameterIn.PATH, description = "ID del género cuyas canciones se desean consultar", required = true, schema = @Schema()) @PathVariable("idGenero") Integer idGenero) {
+        List<Cancion> canciones = cancionService.getAll()
                 .stream()
                 .filter(c -> c.getGenero() != null && c.getGenero().getId().equals(idGenero))
                 .collect(Collectors.toList());
@@ -86,21 +89,23 @@ public class CancionesApiController implements CancionesApi {
             return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok(canciones);
-        
+
     }
 
     @Override
-    public ResponseEntity<List<Cancion>> cancionesGet(@Parameter(in = ParameterIn.QUERY, description = "ID del álbum al que pertenece la canción" ,schema=@Schema()) @Valid @RequestParam(value = "idAlbum", required = false) Integer idAlbum
-            ,@Parameter(in = ParameterIn.QUERY, description = "Nombre de la canción" ,schema=@Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre) {
+    public ResponseEntity<List<Cancion>> cancionesGet(
+            @Parameter(in = ParameterIn.QUERY, description = "ID del álbum al que pertenece la canción", schema = @Schema()) @Valid @RequestParam(value = "idAlbum", required = false) Integer idAlbum,
+            @Parameter(in = ParameterIn.QUERY, description = "Nombre de la canción", schema = @Schema()) @Valid @RequestParam(value = "nombre", required = false) String nombre) {
         List<Cancion> canciones = cancionService.getAll();
         if (canciones.isEmpty())
             return ResponseEntity.noContent().build();
 
-        return ResponseEntity.ok(canciones); 
+        return ResponseEntity.ok(canciones);
     }
 
     @Override
-    public ResponseEntity<Cancion> cancionesPost(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionInput body) {
+    public ResponseEntity<Cancion> cancionesPost(
+            @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody CancionInput body) {
         // 1. Crear Elemento
         ElementoEntity elemento = new ElementoEntity();
         elemento.setNombre(body.getNombre());
@@ -121,19 +126,17 @@ public class CancionesApiController implements CancionesApi {
 
         // 2. Crear Canción con el mismo ID
         CancionEntity cancion = new CancionEntity();
-        cancion.setElemento(elemento);        // Relación
+        cancion.setElemento(elemento); // Relación
         cancion.setNombreAudio(body.getNombreAudio());
-        cancion.setNumRep(body.getNumRep());
+        cancion.setNumRep(0); // Inicialmente 0
 
         // Si tiene álbum
         if (body.getIdAlbum() != null) {
             ElementoEntity album = elementoService.getByIdOrThrow(body.getIdAlbum());
             cancion.setAlbum(album);
-        }
-        else {
+        } else {
             cancion.setAlbum(null);
         }
-
 
         // Guardar canción
         cancion = cancionService.save(cancion);
@@ -143,30 +146,46 @@ public class CancionesApiController implements CancionesApi {
     }
 
     @Override
-    public ResponseEntity<Cancion> cancionesPut(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody CancionPut body) {
+    public ResponseEntity<Cancion> cancionesPut(
+            @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody CancionPut body) {
         Optional<ElementoEntity> opt = elementoService.getById(body.getIdElemento());
-        if (opt.isEmpty()) return ResponseEntity.notFound().build();
+        if (opt.isEmpty())
+            return ResponseEntity.notFound().build();
 
         Optional<CancionEntity> optCancion = cancionService.getById(body.getIdElemento());
-        if (optCancion.isEmpty()) return ResponseEntity.notFound().build();
+        if (optCancion.isEmpty())
+            return ResponseEntity.notFound().build();
 
         ElementoEntity entity = opt.get();
         CancionEntity cancionEntity = optCancion.get();
 
-        if (body.getNombre() != null) entity.setNombre(body.getNombre());
-        if (body.getDescripcion() != null) entity.setDescripcion(body.getDescripcion());
-        if (body.getPrecio() != null) entity.setPrecio(body.getPrecio());
-        if (body.isEsalbum() != null) entity.setEsalbum(body.isEsalbum());
-        if (body.isEsnovedad() != null) entity.setEsnovedad(body.isEsnovedad());
-        if (body.getValoracion() != null) entity.setValoracion(body.getValoracion());
-        if (body.getNumventas() != null) entity.setNumventas(body.getNumventas());
-        if (body.getUrlFoto() != null) entity.setUrlFoto(body.getUrlFoto());
-        if (body.getGenero() != null) entity.setGenero(body.getGenero());
-        if (body.getSubgenero() != null) entity.setSubgenero(body.getSubgenero());
-        if (body.getArtista() != null) entity.setArtista(body.getArtista());
-     
-        if (body.getNombreAudio() != null) cancionEntity.setNombreAudio(body.getNombreAudio());
-        if (body.getNumRep() != null) cancionEntity.setNumRep(body.getNumRep());
+        if (body.getNombre() != null)
+            entity.setNombre(body.getNombre());
+        if (body.getDescripcion() != null)
+            entity.setDescripcion(body.getDescripcion());
+        if (body.getPrecio() != null)
+            entity.setPrecio(body.getPrecio());
+        if (body.isEsalbum() != null)
+            entity.setEsalbum(body.isEsalbum());
+        if (body.isEsnovedad() != null)
+            entity.setEsnovedad(body.isEsnovedad());
+        if (body.getValoracion() != null)
+            entity.setValoracion(body.getValoracion());
+        if (body.getNumventas() != null)
+            entity.setNumventas(body.getNumventas());
+        if (body.getUrlFoto() != null)
+            entity.setUrlFoto(body.getUrlFoto());
+        if (body.getGenero() != null)
+            entity.setGenero(body.getGenero());
+        if (body.getSubgenero() != null)
+            entity.setSubgenero(body.getSubgenero());
+        if (body.getArtista() != null)
+            entity.setArtista(body.getArtista());
+
+        if (body.getNombreAudio() != null)
+            cancionEntity.setNombreAudio(body.getNombreAudio());
+        if (body.getNumRep() != null)
+            cancionEntity.setNumRep(body.getNumRep());
         if (body.getIdAlbum() != null) {
             ElementoEntity album = elementoService.getByIdOrThrow(body.getIdAlbum());
             cancionEntity.setAlbum(album);

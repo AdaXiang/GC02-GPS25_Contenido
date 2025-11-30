@@ -18,62 +18,55 @@ import javax.validation.constraints.*;
 @NotUndefined
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 
-
-public class ElementoInput   {
+public class ElementoInput {
   @JsonProperty("nombre")
 
   private String nombre = null;
 
   @JsonProperty("descripcion")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
+  @JsonSetter(nulls = Nulls.FAIL) // FAIL setting if the value is null
   private String descripcion = null;
 
   @JsonProperty("urlFoto")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
+  @JsonSetter(nulls = Nulls.FAIL) // FAIL setting if the value is null
   private String urlFoto = null;
 
   @JsonProperty("precio")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
+  @JsonSetter(nulls = Nulls.FAIL) // FAIL setting if the value is null
   private Float precio = null;
 
   @JsonProperty("esnovedad")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Boolean esnovedad = null;
 
   @JsonProperty("esalbum")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Boolean esalbum = null;
 
   @JsonProperty("genero")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Integer genero = null;
 
   @JsonProperty("subgenero")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Integer subgenero = null;
 
   @JsonProperty("artista")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Integer artista = null;
 
-
-  public ElementoInput nombre(String nombre) { 
+  public ElementoInput nombre(String nombre) {
 
     this.nombre = nombre;
     return this;
@@ -81,24 +74,23 @@ public class ElementoInput   {
 
   /**
    * Get nombre
+   * 
    * @return nombre
    **/
-  
+
   @Schema(example = "Electric Dreams", required = true, description = "")
-  
+
   @NotNull
-  public String getNombre() {  
+  public String getNombre() {
     return nombre;
   }
 
-
-
-  public void setNombre(String nombre) { 
+  public void setNombre(String nombre) {
 
     this.nombre = nombre;
   }
 
-  public ElementoInput descripcion(String descripcion) { 
+  public ElementoInput descripcion(String descripcion) {
 
     this.descripcion = descripcion;
     return this;
@@ -106,22 +98,21 @@ public class ElementoInput   {
 
   /**
    * Get descripcion
+   * 
    * @return descripcion
    **/
-  
+
   @Schema(example = "Álbum debut de la banda SynthWave", description = "")
-  
-  public String getDescripcion() {  
+
+  public String getDescripcion() {
     return descripcion;
   }
 
-
-
-  public void setDescripcion(String descripcion) { 
+  public void setDescripcion(String descripcion) {
     this.descripcion = descripcion;
   }
 
-  public ElementoInput urlFoto(String urlFoto) { 
+  public ElementoInput urlFoto(String urlFoto) {
 
     this.urlFoto = urlFoto;
     return this;
@@ -129,22 +120,21 @@ public class ElementoInput   {
 
   /**
    * url de la foto
+   * 
    * @return urlFoto
    **/
-  
+
   @Schema(example = "amazon", description = "url de la foto")
-  
-  public String getUrlFoto() {  
+
+  public String getUrlFoto() {
     return urlFoto;
   }
 
-
-
-  public void setUrlFoto(String urlFoto) { 
+  public void setUrlFoto(String urlFoto) {
     this.urlFoto = urlFoto;
   }
 
-  public ElementoInput precio(Float precio) { 
+  public ElementoInput precio(Float precio) {
 
     this.precio = precio;
     return this;
@@ -152,22 +142,21 @@ public class ElementoInput   {
 
   /**
    * Get precio
+   * 
    * @return precio
    **/
-  
+
   @Schema(example = "19.99", description = "")
-  
-  public Float getPrecio() {  
+
+  public Float getPrecio() {
     return precio;
   }
 
-
-
-  public void setPrecio(Float precio) { 
+  public void setPrecio(Float precio) {
     this.precio = precio;
   }
 
-  public ElementoInput esnovedad(Boolean esnovedad) { 
+  public ElementoInput esnovedad(Boolean esnovedad) {
 
     this.esnovedad = esnovedad;
     return this;
@@ -175,22 +164,21 @@ public class ElementoInput   {
 
   /**
    * Get esnovedad
+   * 
    * @return esnovedad
    **/
-  
+
   @Schema(example = "true", description = "")
-  
-  public Boolean isEsnovedad() {  
+
+  public Boolean isEsnovedad() {
     return esnovedad;
   }
 
-
-
-  public void setEsnovedad(Boolean esnovedad) { 
+  public void setEsnovedad(Boolean esnovedad) {
     this.esnovedad = esnovedad;
   }
 
-  public ElementoInput esalbum(Boolean esalbum) { 
+  public ElementoInput esalbum(Boolean esalbum) {
 
     this.esalbum = esalbum;
     return this;
@@ -198,22 +186,21 @@ public class ElementoInput   {
 
   /**
    * Get esalbum
+   * 
    * @return esalbum
    **/
-  
+
   @Schema(example = "false", description = "")
-  
-  public Boolean isEsalbum() {  
+
+  public Boolean isEsalbum() {
     return esalbum;
   }
 
-
-
-  public void setEsalbum(Boolean esalbum) { 
+  public void setEsalbum(Boolean esalbum) {
     this.esalbum = esalbum;
   }
 
-  public ElementoInput genero(Integer genero) { 
+  public ElementoInput genero(Integer genero) {
 
     this.genero = genero;
     return this;
@@ -221,23 +208,22 @@ public class ElementoInput   {
 
   /**
    * Get genero
+   * 
    * @return genero
    **/
-  
+
   @Schema(example = "2", description = "")
-  
-@Valid
-  public Integer getGenero() {  
+
+  @Valid
+  public Integer getGenero() {
     return genero;
   }
 
-
-
-  public void setGenero(Integer genero) { 
+  public void setGenero(Integer genero) {
     this.genero = genero;
   }
 
-  public ElementoInput subgenero(Integer subgenero) { 
+  public ElementoInput subgenero(Integer subgenero) {
 
     this.subgenero = subgenero;
     return this;
@@ -245,23 +231,22 @@ public class ElementoInput   {
 
   /**
    * Get subgenero
+   * 
    * @return subgenero
    **/
-  
+
   @Schema(example = "3", description = "")
-  
-@Valid
-  public Integer getSubgenero() {  
+
+  @Valid
+  public Integer getSubgenero() {
     return subgenero;
   }
 
-
-
-  public void setSubgenero(Integer subgenero) { 
+  public void setSubgenero(Integer subgenero) {
     this.subgenero = subgenero;
   }
 
-  public ElementoInput artista(Integer artista) { 
+  public ElementoInput artista(Integer artista) {
 
     this.artista = artista;
     return this;
@@ -269,19 +254,18 @@ public class ElementoInput   {
 
   /**
    * Get artista
+   * 
    * @return artista
    **/
-  
+
   @Schema(example = "2", description = "")
-  
-@Valid
-  public Integer getArtista() {  
+
+  @Valid
+  public Integer getArtista() {
     return artista;
   }
 
-
-
-  public void setArtista(Integer artista) { 
+  public void setArtista(Integer artista) {
     this.artista = artista;
   }
 
@@ -314,7 +298,7 @@ public class ElementoInput   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ElementoInput {\n");
-    
+
     sb.append("    nombre: ").append(toIndentedString(nombre)).append("\n");
     sb.append("    descripcion: ").append(toIndentedString(descripcion)).append("\n");
     sb.append("    urlFoto: ").append(toIndentedString(urlFoto)).append("\n");

@@ -17,32 +17,27 @@ import javax.validation.constraints.*;
 @NotUndefined
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-11-10T17:11:09.236506587Z[GMT]")
 
-
-public class CancionInput extends ElementoInput  {
+public class CancionInput extends ElementoInput {
   @JsonProperty("idElemento")
 
   private Integer idElemento = null;
 
   @JsonProperty("nombreAudio")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private String nombreAudio = null;
 
   @JsonProperty("numRep")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Integer numRep = null;
 
   @JsonProperty("idAlbum")
 
-  @JsonInclude(JsonInclude.Include.NON_ABSENT)  // Exclude from JSON if absent
-  @JsonSetter(nulls = Nulls.FAIL)    // FAIL setting if the value is null
+  @JsonInclude(JsonInclude.Include.NON_ABSENT) // Exclude from JSON if absent
   private Integer idAlbum = null;
 
-
-  public CancionInput idElemento(Integer idElemento) { 
+  public CancionInput idElemento(Integer idElemento) {
 
     this.idElemento = idElemento;
     return this;
@@ -50,24 +45,23 @@ public class CancionInput extends ElementoInput  {
 
   /**
    * Identificador único de la canción.
+   * 
    * @return idElemento
    **/
-  
+
   @Schema(example = "3", required = true, description = "Identificador único de la canción.")
-  
+
   @NotNull
-  public Integer getIdElemento() {  
+  public Integer getIdElemento() {
     return idElemento;
   }
 
-
-
-  public void setIdElemento(Integer idElemento) { 
+  public void setIdElemento(Integer idElemento) {
 
     this.idElemento = idElemento;
   }
 
-  public CancionInput nombreAudio(String nombreAudio) { 
+  public CancionInput nombreAudio(String nombreAudio) {
 
     this.nombreAudio = nombreAudio;
     return this;
@@ -75,22 +69,22 @@ public class CancionInput extends ElementoInput  {
 
   /**
    * Nombre del archivo de audio.
+   * 
    * @return nombreAudio
    **/
-  
+
   @Schema(example = "ForeverYoung", description = "Nombre del archivo de audio.")
-  
-@Size(max=100)   public String getNombreAudio() {  
+
+  @Size(max = 100)
+  public String getNombreAudio() {
     return nombreAudio;
   }
 
-
-
-  public void setNombreAudio(String nombreAudio) { 
+  public void setNombreAudio(String nombreAudio) {
     this.nombreAudio = nombreAudio;
   }
 
-  public CancionInput numRep(Integer numRep) { 
+  public CancionInput numRep(Integer numRep) {
 
     this.numRep = numRep;
     return this;
@@ -99,22 +93,22 @@ public class CancionInput extends ElementoInput  {
   /**
    * Número de reproducciones de la canción.
    * minimum: 0
+   * 
    * @return numRep
    **/
-  
+
   @Schema(example = "15420", description = "Número de reproducciones de la canción.")
-  
-@Min(0)  public Integer getNumRep() {  
+
+  @Min(0)
+  public Integer getNumRep() {
     return numRep;
   }
 
-
-
-  public void setNumRep(Integer numRep) { 
+  public void setNumRep(Integer numRep) {
     this.numRep = numRep;
   }
 
-  public CancionInput idAlbum(Integer idAlbum) { 
+  public CancionInput idAlbum(Integer idAlbum) {
 
     this.idAlbum = idAlbum;
     return this;
@@ -122,18 +116,17 @@ public class CancionInput extends ElementoInput  {
 
   /**
    * Identificador del álbum al que pertenece la canción (si aplica).
+   * 
    * @return idAlbum
    **/
-  
+
   @Schema(example = "5", description = "Identificador del álbum al que pertenece la canción (si aplica).")
-  
-  public Integer getIdAlbum() {  
+
+  public Integer getIdAlbum() {
     return idAlbum;
   }
 
-
-
-  public void setIdAlbum(Integer idAlbum) { 
+  public void setIdAlbum(Integer idAlbum) {
     this.idAlbum = idAlbum;
   }
 

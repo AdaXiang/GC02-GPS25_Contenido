@@ -16,11 +16,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())    // para REST, normalmente desactivamos CSRF
+                .csrf(csrf -> csrf.disable()) // para REST, normalmente desactivamos CSRF
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
-                );
+                        .anyRequest().permitAll());
 
         return http.build();
     }

@@ -15,8 +15,7 @@ import javax.validation.constraints.*;
 @NotUndefined
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2025-10-27T17:33:52.662194674Z[GMT]")
 
-
-public class Artista extends Usuario  {
+public class Artista extends Usuario {
   @JsonProperty("esnovedad")
 
   private Boolean esnovedad = null;
@@ -33,8 +32,7 @@ public class Artista extends Usuario  {
 
   private Genero genero = null;
 
-
-  public Artista esNovedad(Boolean esnovedad) { 
+  public Artista esNovedad(Boolean esnovedad) {
 
     this.esnovedad = esnovedad;
     return this;
@@ -42,24 +40,23 @@ public class Artista extends Usuario  {
 
   /**
    * Indica si el artista es destacado o de reciente incorporación
+   * 
    * @return esNovedad
    **/
-  
+
   @Schema(example = "true", required = true, description = "Indica si el artista es destacado o de reciente incorporación")
-  
+
   @NotNull
-  public Boolean isEsnovedad() {  
+  public Boolean isEsnovedad() {
     return esnovedad;
   }
 
-
-
-  public void setEsnovedad(Boolean esnovedad) { 
+  public void setEsnovedad(Boolean esnovedad) {
 
     this.esnovedad = esnovedad;
   }
 
-  public Artista oyentes(Integer oyentes) { 
+  public Artista oyentes(Integer oyentes) {
 
     this.oyentes = oyentes;
     return this;
@@ -68,24 +65,24 @@ public class Artista extends Usuario  {
   /**
    * Cantidad total de oyentes del artista
    * minimum: 0
+   * 
    * @return oyentes
    **/
-  
+
   @Schema(example = "15420", required = true, description = "Cantidad total de oyentes del artista")
-  
+
   @NotNull
-@Min(0)  public Integer getOyentes() {  
+  @Min(0)
+  public Integer getOyentes() {
     return oyentes;
   }
 
-
-
-  public void setOyentes(Integer oyentes) { 
+  public void setOyentes(Integer oyentes) {
 
     this.oyentes = oyentes;
   }
 
-  public Artista valoracion(Float valoracion) { 
+  public Artista valoracion(Float valoracion) {
 
     this.valoracion = valoracion;
     return this;
@@ -95,24 +92,25 @@ public class Artista extends Usuario  {
    * Valoración promedio del artista (de 0.0 a 5.0)
    * minimum: 0
    * maximum: 5
+   * 
    * @return valoracion
    **/
-  
+
   @Schema(example = "3.5", required = true, description = "Valoración promedio del artista (de 0.0 a 5.0)")
-  
+
   @NotNull
-@DecimalMin("0") @DecimalMax("5")   public Float getValoracion() {  
+  @DecimalMin("0")
+  @DecimalMax("5")
+  public Float getValoracion() {
     return valoracion;
   }
 
-
-
-  public void setValoracion(Float valoracion) { 
+  public void setValoracion(Float valoracion) {
 
     this.valoracion = valoracion;
   }
 
-  public Artista genero(Genero genero) { 
+  public Artista genero(Genero genero) {
 
     this.genero = genero;
     return this;
@@ -120,20 +118,19 @@ public class Artista extends Usuario  {
 
   /**
    * Get genero
+   * 
    * @return genero
    **/
-  
+
   @Schema(required = true, description = "")
-  
-@Valid
+
+  @Valid
   @NotNull
-  public Genero getGenero() {  
+  public Genero getGenero() {
     return genero;
   }
 
-
-
-  public void setGenero(Genero genero) { 
+  public void setGenero(Genero genero) {
 
     this.genero = genero;
   }
